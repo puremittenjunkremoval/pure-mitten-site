@@ -416,6 +416,42 @@ section { padding: 82px 5%; }
   margin: 0 auto 24px;
 }
 
+.brothers-section { background: var(--white); }
+
+.brothers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.brother-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 8px 26px rgba(13, 35, 64, 0.06);
+  padding: 30px;
+}
+
+.brother-initial {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--navy);
+  color: var(--white);
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 18px;
+}
+
+.brother-card p {
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+
 .map-title {
   font-family: "Bebas Neue", sans-serif;
   font-size: 1.5rem;
@@ -603,6 +639,7 @@ footer {
   .services-grid,
   .pricing-grid,
   .values-grid,
+  .brothers-grid,
   .load-grid,
   .hero-content-grid,
   .about-layout,
@@ -625,5 +662,5 @@ footer {
   .quote-form,
   .quote-side { padding: 24px; }
   section { padding: 64px 5%; }
-  .card, .service-card, .pricing-card, .value-card, .contact-card { padding: 24px; }
+  .card, .service-card, .pricing-card, .value-card, .contact-card, .brother-card { padding: 24px; }
 }
