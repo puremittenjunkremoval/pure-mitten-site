@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 420" fill="none" role="img" aria-labelledby="title">
+  <title id="title">Southeast Michigan service area outline</title>
+  <path d="M116 382 L116 354 C126 337 133 316 136 292 C139 264 132 244 136 224 C128 216 128 204 137 196 C130 181 135 168 146 154 C159 137 163 119 160 101 C170 107 179 100 179 88 C190 95 198 86 204 71 C211 52 222 42 237 36 C248 31 252 22 262 16 C285 31 306 34 328 35 C342 45 350 60 354 78 L342 101 C356 116 357 139 360 163 C353 174 352 187 359 197 C359 212 349 220 336 217 C323 225 318 240 319 258 C304 267 288 276 278 294 C267 313 271 337 280 354 C294 342 309 318 325 287 L352 274 C360 280 364 291 367 304 L374 344 L384 362 L384 382 Z" stroke="#7dd3fc" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M254 270 C279 249 311 242 338 254 C333 279 319 306 299 327 C282 346 264 356 244 358 C235 331 237 291 254 270 Z" fill="#7dd3fc" fill-opacity="0.18" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="286" cy="308" r="11" fill="#ffffff"/>
+  <circle cx="286" cy="308" r="22" stroke="#0099e0" stroke-width="8" stroke-opacity="0.28"/>
+</svg>

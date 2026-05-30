@@ -116,7 +116,7 @@ a { color: inherit; }
   height: 520px;
   opacity: 0.16;
   color: var(--white);
-  background: url("assets/michigan-outline.svg") center/contain no-repeat;
+  background: url("assets/service-area-outline.svg") center/contain no-repeat;
   pointer-events: none;
 }
 
@@ -129,7 +129,7 @@ a { color: inherit; }
   height: 440px;
   opacity: 0.16;
   color: var(--white);
-  background: url("assets/michigan-outline.svg") center/contain no-repeat;
+  background: url("assets/service-area-outline.svg") center/contain no-repeat;
   pointer-events: none;
 }
 
@@ -437,7 +437,7 @@ section { padding: 82px 5%; }
 
 .map-figure {
   position: relative;
-  width: 245px;
+  width: min(285px, 100%);
   margin: 0 auto 18px;
   color: #7dd3fc;
 }
