@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Quote | Pure Mitten Junk Removal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260529f" />
+</head>
+<body>
+  <nav class="site-nav">
+    <a class="brand" href="index.html"><img class="brand-logo" src="assets/pure%20mitten%20junk%20removal.png" alt="Pure Mitten Junk Removal" width="260" height="86" style="width:260px;height:86px;max-width:48vw;object-fit:contain;display:block;" /></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a class="nav-cta active" href="quote.html">Free Quote</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-hero quote-hero">
+    <div class="page-hero-inner reveal">
+      <div class="eyebrow">Free Quote</div>
+      <h1>Tell us what needs to go.</h1>
+      <p class="page-sub">Send the details, add photos if you have them, and we will follow up with a clear estimate before any work starts.</p>
+    </div>
+  </header>
+
+  <section class="quote-section">
+    <div class="section-inner quote-layout">
+      <form class="quote-form reveal" action="https://formsubmit.co/info@puremittenjunkremoval.com" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_subject" value="New Free Quote Request - Pure Mitten Junk Removal" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_next" value="https://puremittenjunkremoval.com/thanks.html" />
+        <input type="text" name="_honey" class="hidden-field" tabindex="-1" autocomplete="off" />
+
+        <div class="form-grid">
+          <label class="field">
+            <span>Name</span>
+            <input type="text" name="name" autocomplete="name" required />
+          </label>
+          <label class="field">
+            <span>Phone Number</span>
+            <input type="tel" name="phone" autocomplete="tel" required />
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="email" />
+          </label>
+          <label class="field">
+            <span>City</span>
+            <input type="text" name="city" autocomplete="address-level2" />
+          </label>
+        </div>
+
+        <div class="form-grid">
+          <label class="field">
+            <span>What are we removing?</span>
+            <select name="junk_type" required>
+              <option value="">Choose one</option>
+              <option>Furniture</option>
+              <option>Appliances</option>
+              <option>Garage or basement cleanout</option>
+              <option>Estate or rental cleanout</option>
+              <option>Yard waste</option>
+              <option>Construction debris</option>
+              <option>Hot tub, shed, or large heavy item</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Estimated load size</span>
+            <select name="estimated_load">
+              <option value="">Not sure yet</option>
+              <option>Minimum pickup</option>
+              <option>1/4 load</option>
+              <option>Half load</option>
+              <option>Full load</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset class="field challenge-field">
+          <legend>Anything we should know?</legend>
+          <div class="checkbox-grid">
+            <label><input type="checkbox" name="job_notes[]" value="Heavy item" /> Heavy item</label>
+            <label><input type="checkbox" name="job_notes[]" value="Hard to reach" /> Hard to reach</label>
+            <label><input type="checkbox" name="job_notes[]" value="Upstairs or downstairs" /> Upstairs or downstairs</label>
+            <label><input type="checkbox" name="job_notes[]" value="Needs disassembly" /> Needs disassembly</label>
+            <label><input type="checkbox" name="job_notes[]" value="Curbside pickup" /> Curbside pickup</label>
+            <label><input type="checkbox" name="job_notes[]" value="Tight hallway or doorway" /> Tight hallway or doorway</label>
+          </div>
+        </fieldset>
+
+        <label class="field">
+          <span>Details</span>
+          <textarea name="details" rows="6" placeholder="Tell us what items need to go, where they are located, and when you would like them removed."></textarea>
+        </label>
+
+        <label class="field">
+          <span>Photos</span>
+          <input type="file" name="attachment" accept="image/png, image/jpeg, image/webp, image/heic" multiple />
+        </label>
+
+        <button class="btn btn-blue submit-btn" type="submit">Send Quote Request</button>
+      </form>
+
+      <aside class="quote-side reveal">
+        <img class="about-logo" src="assets/pure%20mitten%20junk%20removal.png" alt="Pure Mitten Junk Removal logo" />
+        <div class="map-title">Fast, Clear, Local</div>
+        <p class="section-sub">Photos help us estimate faster, especially for heavy items, tight spaces, stairs, or larger cleanouts.</p>
+        <div class="chips"><span class="chip">Furniture</span><span class="chip">Appliances</span><span class="chip">Cleanouts</span><span class="chip">Debris</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div><img class="footer-logo" src="assets/pure%20mitten%20junk%20removal.png" alt="Pure Mitten Junk Removal" width="158" style="width:158px;max-width:38vw;height:auto;display:block;" /><p>© 2026 Pure Mitten Junk Removal</p></div>
+      <ul class="footer-links"><li><a href="services.html">Services</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="about.html">About</a></li></ul>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
