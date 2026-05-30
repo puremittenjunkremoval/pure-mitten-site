@@ -537,6 +537,19 @@ section { padding: 82px 5%; }
 .checkbox-grid input { width: 17px; height: 17px; accent-color: var(--blue); }
 .submit-btn { border: 0; cursor: pointer; width: 100%; margin-top: 6px; }
 
+.quote-phone {
+  color: var(--text);
+  line-height: 1.6;
+  margin: 18px 0 0;
+}
+
+.quote-phone a,
+.footer-contact a {
+  color: inherit;
+  font-weight: 800;
+  text-decoration: none;
+}
+
 .mini-contact {
   background: var(--ice);
   padding: 62px 5%;
@@ -571,6 +584,8 @@ footer {
   height: auto;
   margin-bottom: 10px;
 }
+
+.footer-contact { margin-top: 4px; color: rgba(255, 255, 255, 0.7); }
 
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .reveal.visible { opacity: 1; transform: none; }
