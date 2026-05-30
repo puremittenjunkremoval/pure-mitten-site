@@ -74,6 +74,7 @@ a { color: inherit; }
   color: var(--navy) !important;
   padding: 12px 22px;
   border-radius: 5px;
+  white-space: nowrap;
 }
 
 .nav-cta:hover { background: #dff2ff; }
@@ -597,6 +598,85 @@ section { padding: 82px 5%; }
   text-decoration: none;
 }
 
+.seo-section { background: var(--white); }
+
+.seo-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.65fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.seo-main,
+.seo-side,
+.photo-card,
+.nearby-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 8px 26px rgba(13, 35, 64, 0.06);
+}
+
+.seo-main { padding: 34px; }
+.seo-side { padding: 28px; }
+
+.seo-photo {
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+
+.seo-main h2,
+.seo-side h3,
+.nearby-card h3 {
+  font-family: "Bebas Neue", sans-serif;
+  color: var(--navy);
+  letter-spacing: 0.035em;
+  line-height: 1;
+}
+
+.seo-main h2 { font-size: 2rem; margin: 28px 0 12px; }
+.seo-main p { color: var(--muted); line-height: 1.75; margin-bottom: 16px; }
+
+.seo-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 28px 0;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.photo-card { overflow: hidden; }
+.photo-card img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.photo-card p { padding: 14px 16px 18px; margin: 0; font-weight: 800; color: var(--navy); }
+
+.nearby-card { padding: 28px; margin-top: 24px; }
+.nearby-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.nearby-links a {
+  background: var(--ice);
+  border: 1px solid rgba(0, 78, 140, 0.14);
+  border-radius: 999px;
+  color: var(--navy);
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 7px 12px;
+  text-decoration: none;
+}
+
+.seo-side .btn { width: 100%; margin-top: 18px; }
+.seo-side p { color: var(--muted); line-height: 1.65; margin-top: 10px; }
+.quick-list { list-style: none; display: grid; gap: 10px; margin-top: 18px; }
+.quick-list a { color: var(--blue); font-weight: 800; text-decoration: none; }
+
 .mini-contact {
   background: var(--ice);
   padding: 62px 5%;
@@ -648,10 +728,17 @@ footer {
   .hero-content-grid,
   .about-layout,
   .contact-layout,
-  .quote-layout { grid-template-columns: 1fr; }
+  .quote-layout,
+  .seo-layout { grid-template-columns: 1fr; }
   .hero-logo-card { justify-self: start; max-width: 440px; }
   .section-head { display: block; }
   .section-head .btn { margin-top: 22px; }
+}
+
+@media (max-width: 1120px) {
+  .nav-links { gap: 18px; }
+  .nav-links a { font-size: 0.92rem; }
+  .nav-cta { padding: 10px 16px; }
 }
 
 @media (max-width: 680px) {
@@ -662,9 +749,13 @@ footer {
   .brand-logo { width: 178px; height: 62px; }
   .hero, .page-hero { padding-top: 70px; }
   .form-grid,
-  .checkbox-grid { grid-template-columns: 1fr; }
+  .checkbox-grid,
+  .photo-grid { grid-template-columns: 1fr; }
   .quote-form,
   .quote-side { padding: 24px; }
+  .seo-main,
+  .seo-side,
+  .nearby-card { padding: 24px; }
   section { padding: 64px 5%; }
   .card, .service-card, .pricing-card, .value-card, .contact-card, .brother-card { padding: 24px; }
 }
