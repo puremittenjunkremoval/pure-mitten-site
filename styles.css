@@ -439,6 +439,12 @@ section { padding: 82px 5%; }
   font-size: 0.78rem;
 }
 
+.quote-side .chip {
+  background: var(--ice);
+  border-color: rgba(0, 78, 140, 0.16);
+  color: var(--navy);
+}
+
 .contact-card a {
   color: var(--navy);
   font-weight: 800;
