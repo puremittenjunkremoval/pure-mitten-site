@@ -107,32 +107,6 @@ a { color: inherit; }
     radial-gradient(ellipse 35% 60% at 8% 85%, rgba(0, 153, 224, 0.12), transparent 65%);
 }
 
-.hero::after {
-  content: "";
-  position: absolute;
-  left: max(18px, 4vw);
-  bottom: -135px;
-  width: 390px;
-  height: 520px;
-  opacity: 0.16;
-  color: var(--white);
-  background: url("assets/service-area-outline.svg") center/contain no-repeat;
-  pointer-events: none;
-}
-
-.page-hero::after {
-  content: "";
-  position: absolute;
-  right: max(24px, 7vw);
-  bottom: -150px;
-  width: 330px;
-  height: 440px;
-  opacity: 0.16;
-  color: var(--white);
-  background: url("assets/service-area-outline.svg") center/contain no-repeat;
-  pointer-events: none;
-}
-
 .hero-inner,
 .page-hero-inner,
 .section-inner {
@@ -435,28 +409,11 @@ section { padding: 82px 5%; }
   text-align: center;
 }
 
-.map-figure {
-  position: relative;
-  width: min(285px, 100%);
-  margin: 0 auto 18px;
-  color: #7dd3fc;
-}
-
-.map-mitten {
+.about-logo {
   display: block;
-  width: 100%;
+  width: min(320px, 100%);
   height: auto;
-}
-
-.service-dot {
-  position: absolute;
-  left: 72%;
-  top: 82%;
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  background: var(--white);
-  box-shadow: 0 0 0 9px rgba(0, 153, 224, 0.28), 0 0 34px rgba(125, 211, 252, 0.75);
+  margin: 0 auto 24px;
 }
 
 .map-title {
@@ -548,8 +505,6 @@ footer {
   .nav-cta { padding: 7px 12px; }
   .brand-logo { width: 144px; height: 50px; }
   .hero, .page-hero { padding-top: 70px; }
-  .hero::after,
-  .page-hero::after { width: 230px; height: 310px; bottom: -90px; right: 4%; left: auto; }
   section { padding: 64px 5%; }
   .card, .service-card, .pricing-card, .value-card, .contact-card { padding: 24px; }
 }
