@@ -439,10 +439,11 @@ section { padding: 82px 5%; }
   font-size: 0.78rem;
 }
 
-.quote-side .chip {
+.quote-side .chips .chip {
   background: var(--ice);
   border-color: rgba(0, 78, 140, 0.16);
-  color: var(--navy);
+  color: var(--navy) !important;
+  font-weight: 800;
 }
 
 .contact-card a {
