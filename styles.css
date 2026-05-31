@@ -461,6 +461,20 @@ section { padding: 82px 5%; }
   box-shadow: 0 8px 26px rgba(13, 35, 64, 0.06);
 }
 
+.service-card {
+  overflow: hidden;
+}
+
+.service-card-photo {
+  display: block;
+  width: calc(100% + 60px);
+  max-width: none;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: -30px -30px 22px;
+  border-bottom: 1px solid var(--line);
+}
+
 .card-title,
 .service-card h3,
 .pricing-card h3 {
@@ -1329,6 +1343,10 @@ body.night-mode .nav-quote:hover {
   .nearby-card { padding: 24px; }
   section { padding: 64px 5%; }
   .card, .service-card, .pricing-card, .value-card, .contact-card, .brother-card { padding: 24px; }
+  .service-card-photo {
+    width: calc(100% + 48px);
+    margin: -24px -24px 20px;
+  }
   .footer-inner { align-items: flex-start; flex-direction: column; }
 }
 
