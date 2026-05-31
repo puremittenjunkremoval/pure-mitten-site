@@ -1,9 +1,18 @@
 const reveals = document.querySelectorAll(".reveal");
 const siteNav = document.querySelector(".site-nav");
+let navIsCompact = false;
 
 const updateNavSize = () => {
   if (!siteNav) return;
-  siteNav.classList.toggle("nav-compact", window.scrollY > 24);
+  const y = window.scrollY || document.documentElement.scrollTop || 0;
+
+  if (!navIsCompact && y > 140) {
+    navIsCompact = true;
+    siteNav.classList.add("nav-compact");
+  } else if (navIsCompact && y < 12) {
+    navIsCompact = false;
+    siteNav.classList.remove("nav-compact");
+  }
 };
 
 updateNavSize();

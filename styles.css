@@ -72,7 +72,7 @@ a { color: inherit; }
 .footer-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
   list-style: none;
 }
 
@@ -120,7 +120,7 @@ a { color: inherit; }
   position: absolute;
   top: calc(100% + 28px);
   left: 50%;
-  width: min(760px, 90vw);
+  width: min(620px, 90vw);
   padding: 28px 30px;
   background: #05080b;
   border: 1px solid rgba(125, 211, 252, 0.45);
@@ -150,8 +150,16 @@ a { color: inherit; }
 
 .services-menu-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 30px;
+}
+
+.areas-menu {
+  width: min(360px, 86vw);
+}
+
+.areas-menu .services-menu-grid {
+  grid-template-columns: 1fr;
 }
 
 .menu-heading {
@@ -202,9 +210,13 @@ a { color: inherit; }
 }
 
 .nav-phone-number::before {
-  content: "\260E";
+  content: none;
+}
+
+.phone-icon {
   color: var(--sky);
   font-size: 1rem;
+  line-height: 1;
 }
 
 .site-nav.nav-compact .nav-phone-number {
