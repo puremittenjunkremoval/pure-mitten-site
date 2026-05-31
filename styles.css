@@ -35,6 +35,14 @@ a { color: inherit; }
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.24);
 }
 
+.nav-shell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 26px;
+  flex: 1;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -52,7 +60,7 @@ a { color: inherit; }
 .footer-links {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 28px;
   list-style: none;
 }
 
@@ -69,6 +77,95 @@ a { color: inherit; }
 .nav-links a.active,
 .footer-links a:hover { color: var(--white); }
 
+.nav-dropdown { position: relative; }
+
+.nav-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.nav-caret {
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+.services-menu {
+  position: absolute;
+  top: calc(100% + 28px);
+  left: 50%;
+  width: min(760px, 90vw);
+  padding: 28px 30px;
+  background: #05080b;
+  border: 1px solid rgba(125, 211, 252, 0.45);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 28px 55px rgba(0, 0, 0, 0.32);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-28%) translateY(8px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.services-menu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -28px;
+  height: 28px;
+}
+
+.nav-dropdown:hover .services-menu,
+.nav-dropdown:focus-within .services-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-28%) translateY(0);
+}
+
+.services-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+}
+
+.menu-heading {
+  color: var(--white);
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 14px;
+}
+
+.services-menu a {
+  display: block;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.96rem;
+  font-weight: 700;
+  padding: 7px 0;
+}
+
+.services-menu a:hover,
+.services-menu a.active { color: var(--sky); }
+
+.nav-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.nav-phone-number {
+  color: var(--white);
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.98rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.nav-phone-number:hover { color: #dff2ff; }
+
 .nav-cta {
   padding: 12px 22px;
   border-radius: 5px;
@@ -76,17 +173,10 @@ a { color: inherit; }
   border: 1px solid transparent;
 }
 
-.nav-phone {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.34);
-  color: var(--white) !important;
-}
-
-.nav-phone:hover { background: rgba(255, 255, 255, 0.22); }
-
 .nav-quote {
   background: var(--white);
   color: var(--navy) !important;
+  text-align: center;
 }
 
 .nav-quote:hover { background: #dff2ff; }
@@ -726,11 +816,46 @@ footer {
 
 .footer-contact { margin-top: 4px; color: rgba(255, 255, 255, 0.7); }
 
+.faq-list {
+  display: grid;
+  gap: 16px;
+}
+
+.faq-item {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 26px;
+  box-shadow: 0 14px 28px rgba(0, 78, 140, 0.07);
+}
+
+.faq-item h2 {
+  color: var(--navy);
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.55rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+
+.faq-item p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 
 @media (max-width: 900px) {
+  .nav-shell { gap: 16px; }
   .nav-links { gap: 18px; }
+  .services-menu {
+    left: auto;
+    right: 0;
+    transform: translateY(8px);
+  }
+  .nav-dropdown:hover .services-menu,
+  .nav-dropdown:focus-within .services-menu { transform: translateY(0); }
+  .services-menu-grid { grid-template-columns: 1fr 1fr; }
   .preview-grid,
   .services-grid,
   .pricing-grid,
@@ -748,16 +873,26 @@ footer {
 }
 
 @media (max-width: 1120px) {
+  .nav-shell { gap: 18px; }
   .nav-links { gap: 18px; }
   .nav-links a { font-size: 0.92rem; }
   .nav-cta { padding: 10px 16px; }
+  .brand-logo { width: 220px; height: 76px; }
 }
 
 @media (max-width: 680px) {
   .site-nav { height: auto; min-height: 92px; align-items: flex-start; padding-top: 14px; padding-bottom: 14px; gap: 16px; }
+  .nav-shell { align-items: flex-end; flex-direction: column; gap: 12px; }
   .nav-links { flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
   .nav-links a { font-size: 0.82rem; }
   .nav-cta { padding: 7px 12px; }
+  .nav-actions { align-items: flex-end; gap: 6px; }
+  .nav-phone-number { font-size: 0.86rem; }
+  .services-menu {
+    width: min(330px, 88vw);
+    padding: 20px;
+  }
+  .services-menu-grid { grid-template-columns: 1fr; gap: 16px; }
   .brand-logo { width: 178px; height: 62px; }
   .hero, .page-hero { padding-top: 70px; }
   .form-grid,

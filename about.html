@@ -10,19 +10,50 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260531a" />
+  <link rel="stylesheet" href="styles.css?v=20260531b" />
 </head>
 <body>
   <nav class="site-nav">
     <a class="brand" href="index.html"><img class="brand-logo" src="assets/pure%20mitten%20junk%20removal.png" alt="Pure Mitten Junk Removal" width="260" height="86" style="width:260px;height:86px;max-width:48vw;object-fit:contain;display:block;" /></a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="pricing.html">Pricing</a></li>
-      <li><a class="active" href="about.html">About</a></li>
-      <li><a class="nav-cta nav-phone" href="quote.html">Call/Text 734-480-8190</a></li>
-      <li><a class="nav-cta nav-quote" href="quote.html">Get Quote</a></li>
-    </ul>
+    <div class="nav-shell">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="nav-dropdown">
+          <a class="nav-dropdown-toggle" href="services.html">Services <span class="nav-caret" aria-hidden="true">v</span></a>
+          <div class="services-menu">
+            <div class="services-menu-grid">
+              <div>
+                <div class="menu-heading">Services</div>
+                <a href="furniture-removal.html">Furniture Removal</a>
+                <a href="appliance-removal.html">Appliance Removal</a>
+                <a href="garage-cleanouts.html">Garage Cleanouts</a>
+                <a href="basement-cleanouts.html">Basement Cleanouts</a>
+              </div>
+              <div>
+                <div class="menu-heading">Cleanouts</div>
+                <a href="estate-cleanouts.html">Estate Cleanouts</a>
+                <a href="construction-debris-removal.html">Construction Debris Removal</a>
+                <a href="services.html">All Services</a>
+              </div>
+              <div>
+                <div class="menu-heading">Service Areas</div>
+                <a href="junk-removal-ann-arbor-mi.html">Ann Arbor, MI</a>
+                <a href="junk-removal-ypsilanti-mi.html">Ypsilanti, MI</a>
+                <a href="junk-removal-saline-mi.html">Saline, MI</a>
+                <a href="junk-removal-canton-mi.html">Canton, MI</a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a class="active" href="about.html">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="nav-phone-number" href="tel:+17344808190">734-480-8190</a>
+        <a class="nav-cta nav-quote" href="quote.html">Get Quote</a>
+      </div>
+    </div>
   </nav>
 
   <header class="page-hero">
@@ -96,8 +127,13 @@
 
   <footer>
     <div class="footer-inner">
-      <div><img class="footer-logo" src="assets/pure%20mitten%20junk%20removal.png" alt="Pure Mitten Junk Removal" width="158" style="width:158px;max-width:38vw;height:auto;display:block;" /><p>Â© 2026 Pure Mitten Junk Removal</p><p class="footer-contact">Call or text <a href="tel:+17344808190">734-480-8190</a></p></div>
-      <ul class="footer-links"><li><a href="services.html">Services</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="about.html">About</a></li></ul>
+      <div><img class="footer-logo" src="assets/pure%20mitten%20junk%20removal.png" alt="Pure Mitten Junk Removal" width="158" style="width:158px;max-width:38vw;height:auto;display:block;" /><p>&copy; 2026 Pure Mitten Junk Removal &middot; puremittenjunkremoval.com</p><p class="footer-contact">Call or text <a href="tel:+17344808190">734-480-8190</a></p></div>
+      <ul class="footer-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
     </div>
   </footer>
   <script src="script.js"></script>
