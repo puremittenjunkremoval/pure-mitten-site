@@ -6,10 +6,9 @@ let navIsCompact = false;
 const setThemeToggleText = () => {
   if (!themeToggle) return;
   const isNight = document.body.classList.contains("night-mode");
-  const label = isNight ? "Day Mode" : "Night Mode";
-  const icon = isNight ? "D" : "N";
+  const label = isNight ? "Night Mode" : "Day Mode";
   themeToggle.setAttribute("aria-pressed", String(isNight));
-  themeToggle.innerHTML = `<span class="theme-toggle-icon" aria-hidden="true">${icon}</span><span>${label}</span>`;
+  themeToggle.innerHTML = `<span class="theme-toggle-track" aria-hidden="true"><span class="theme-toggle-thumb"></span><span class="theme-toggle-symbol"></span></span><span class="theme-toggle-text">${label}</span>`;
 };
 
 const savedTheme = localStorage.getItem("pureMittenTheme");
