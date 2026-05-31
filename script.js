@@ -1,6 +1,7 @@
 const reveals = document.querySelectorAll(".reveal");
 const siteNav = document.querySelector(".site-nav");
 const themeToggle = document.querySelector("[data-theme-toggle]");
+const navDropdowns = document.querySelectorAll(".nav-dropdown");
 let navIsCompact = false;
 
 const setThemeToggleText = () => {
@@ -38,6 +39,43 @@ const updateNavSize = () => {
 
 updateNavSize();
 window.addEventListener("scroll", updateNavSize, { passive: true });
+
+const closeMobileDropdowns = (except = null) => {
+  navDropdowns.forEach((dropdown) => {
+    if (dropdown === except) return;
+    dropdown.classList.remove("is-open");
+    dropdown.querySelector(".nav-dropdown-toggle")?.setAttribute("aria-expanded", "false");
+  });
+};
+
+navDropdowns.forEach((dropdown) => {
+  const toggle = dropdown.querySelector(".nav-dropdown-toggle");
+  if (!toggle) return;
+
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.addEventListener("click", (event) => {
+    if (!window.matchMedia("(max-width: 680px)").matches) return;
+    event.preventDefault();
+
+    const willOpen = !dropdown.classList.contains("is-open");
+    closeMobileDropdowns(dropdown);
+    dropdown.classList.toggle("is-open", willOpen);
+    toggle.setAttribute("aria-expanded", String(willOpen));
+  });
+});
+
+document.addEventListener("click", (event) => {
+  if (!window.matchMedia("(max-width: 680px)").matches) return;
+  if (!event.target.closest(".nav-dropdown")) closeMobileDropdowns();
+});
+
+window.addEventListener("resize", () => {
+  if (!window.matchMedia("(max-width: 680px)").matches) closeMobileDropdowns();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeMobileDropdowns();
+});
 
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver((entries) => {
