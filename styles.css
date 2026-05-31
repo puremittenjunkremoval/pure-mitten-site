@@ -70,14 +70,26 @@ a { color: inherit; }
 .footer-links a:hover { color: var(--white); }
 
 .nav-cta {
-  background: var(--white);
-  color: var(--navy) !important;
   padding: 12px 22px;
   border-radius: 5px;
   white-space: nowrap;
+  border: 1px solid transparent;
 }
 
-.nav-cta:hover { background: #dff2ff; }
+.nav-phone {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.34);
+  color: var(--white) !important;
+}
+
+.nav-phone:hover { background: rgba(255, 255, 255, 0.22); }
+
+.nav-quote {
+  background: var(--white);
+  color: var(--navy) !important;
+}
+
+.nav-quote:hover { background: #dff2ff; }
 
 .hero,
 .page-hero {
