@@ -156,11 +156,25 @@ a { color: inherit; }
 }
 
 .areas-menu {
-  width: min(360px, 86vw);
+  width: min(760px, 90vw);
 }
 
 .areas-menu .services-menu-grid {
-  grid-template-columns: 1fr;
+  display: block;
+}
+
+.areas-menu .services-menu-grid > div {
+  column-count: 3;
+  column-gap: 30px;
+}
+
+.areas-menu .menu-heading {
+  break-after: avoid;
+  column-span: all;
+}
+
+.areas-menu a {
+  break-inside: avoid;
 }
 
 .menu-heading {
