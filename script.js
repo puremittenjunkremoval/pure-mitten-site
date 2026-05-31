@@ -1,6 +1,28 @@
 const reveals = document.querySelectorAll(".reveal");
 const siteNav = document.querySelector(".site-nav");
+const themeToggle = document.querySelector("[data-theme-toggle]");
 let navIsCompact = false;
+
+const setThemeToggleText = () => {
+  if (!themeToggle) return;
+  const isNight = document.body.classList.contains("night-mode");
+  const label = isNight ? "Day Mode" : "Night Mode";
+  const icon = isNight ? "D" : "N";
+  themeToggle.setAttribute("aria-pressed", String(isNight));
+  themeToggle.innerHTML = `<span class="theme-toggle-icon" aria-hidden="true">${icon}</span><span>${label}</span>`;
+};
+
+const savedTheme = localStorage.getItem("pureMittenTheme");
+if (savedTheme === "night") {
+  document.body.classList.add("night-mode");
+}
+setThemeToggleText();
+
+themeToggle?.addEventListener("click", () => {
+  document.body.classList.toggle("night-mode");
+  localStorage.setItem("pureMittenTheme", document.body.classList.contains("night-mode") ? "night" : "day");
+  setThemeToggleText();
+});
 
 const updateNavSize = () => {
   if (!siteNav) return;

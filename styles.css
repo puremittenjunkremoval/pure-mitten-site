@@ -18,6 +18,7 @@ body {
   color: var(--text);
   background: var(--white);
   overflow-x: hidden;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 a { color: inherit; }
@@ -885,6 +886,158 @@ footer {
 }
 
 .footer-contact { margin-top: 4px; color: rgba(255, 255, 255, 0.7); }
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 28px auto 0;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid rgba(125, 211, 252, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+}
+
+.theme-toggle:hover { background: rgba(255, 255, 255, 0.14); }
+
+.theme-toggle-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--sky);
+  color: var(--white);
+  font-size: 0.82rem;
+}
+
+body.night-mode {
+  color: #e8f4ff;
+  background: #07111d;
+}
+
+body.night-mode .band,
+body.night-mode .quote-section,
+body.night-mode .brothers-section,
+body.night-mode .seo-section {
+  background: #07111d;
+}
+
+body.night-mode section:not(.dark-section):not(.hero):not(.page-hero),
+body.night-mode .mini-contact {
+  background-color: #0a1624;
+}
+
+body.night-mode .card,
+body.night-mode .service-card,
+body.night-mode .pricing-card,
+body.night-mode .value-card,
+body.night-mode .contact-card,
+body.night-mode .brother-card,
+body.night-mode .load-card,
+body.night-mode .quote-form,
+body.night-mode .quote-side,
+body.night-mode .seo-main,
+body.night-mode .seo-side,
+body.night-mode .photo-card,
+body.night-mode .nearby-card,
+body.night-mode .faq-item {
+  background: #101d2c;
+  border-color: rgba(125, 211, 252, 0.18);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+}
+
+body.night-mode .section-title,
+body.night-mode .card-title,
+body.night-mode .service-card h3,
+body.night-mode .pricing-card h3,
+body.night-mode .price,
+body.night-mode .load-name,
+body.night-mode .brother-card h3,
+body.night-mode .faq-item h2,
+body.night-mode .seo-main h2,
+body.night-mode .seo-side h3,
+body.night-mode .nearby-card h3,
+body.night-mode .photo-card p,
+body.night-mode .field span,
+body.night-mode .challenge-field legend,
+body.night-mode .contact-card a,
+body.night-mode .nearby-links a,
+body.night-mode .quote-side .chips .chip {
+  color: #7dd3fc !important;
+}
+
+body.night-mode .section-sub,
+body.night-mode .card p,
+body.night-mode .service-card p,
+body.night-mode .pricing-card p,
+body.night-mode .value-card p,
+body.night-mode .contact-card p,
+body.night-mode .pricing-card li,
+body.night-mode .brother-card p,
+body.night-mode .faq-item p,
+body.night-mode .seo-main p,
+body.night-mode .seo-side p,
+body.night-mode .checkbox-grid label,
+body.night-mode .quote-phone,
+body.night-mode .field {
+  color: #b7cde0;
+}
+
+body.night-mode .pricing-card.featured {
+  background: #004e8c;
+  border-color: #7dd3fc;
+}
+
+body.night-mode .service-icon,
+body.night-mode .value-icon,
+body.night-mode .nearby-links a,
+body.night-mode .quote-side .chips .chip {
+  background: rgba(125, 211, 252, 0.1);
+  border-color: rgba(125, 211, 252, 0.2);
+}
+
+body.night-mode .load-bar,
+body.night-mode .challenge-field,
+body.night-mode .seo-photo {
+  border-color: rgba(125, 211, 252, 0.22);
+}
+
+body.night-mode .field input,
+body.night-mode .field select,
+body.night-mode .field textarea {
+  background: #07111d;
+  border-color: rgba(125, 211, 252, 0.22);
+  color: #e8f4ff;
+}
+
+body.night-mode .field input::placeholder,
+body.night-mode .field textarea::placeholder {
+  color: #7894aa;
+}
+
+body.night-mode .brother-photo-placeholder {
+  background: linear-gradient(145deg, #0c1d2f, #13263a);
+  border-color: rgba(125, 211, 252, 0.24);
+  color: #9db8ca;
+}
+
+body.night-mode .btn-primary,
+body.night-mode .nav-quote {
+  background: #f8fbff;
+  color: #004e8c !important;
+}
+
+body.night-mode .btn-primary:hover,
+body.night-mode .nav-quote:hover {
+  background: #dff2ff;
+}
 
 .faq-list {
   display: grid;
