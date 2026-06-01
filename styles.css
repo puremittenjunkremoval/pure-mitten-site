@@ -632,7 +632,13 @@ section {
   background: var(--navy);
   border-color: var(--sky);
   color: var(--white);
-  padding-top: 42px;
+  padding-top: 58px;
+}
+
+.pricing-card.featured::after {
+  top: 18px;
+  right: -48px;
+  background: rgba(125, 211, 252, 0.08);
 }
 .pricing-card.featured h3,
 .pricing-card.featured .price { color: var(--white); }
@@ -640,15 +646,16 @@ section {
 .pricing-card.featured li { color: rgba(255, 255, 255, 0.72); }
 .badge {
   position: absolute;
-  top: 10px;
+  top: 18px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
   background: var(--sky);
   color: var(--white);
   border-radius: 999px;
-  padding: 5px 14px;
+  padding: 6px 16px;
   font-size: 0.7rem;
+  line-height: 1;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
