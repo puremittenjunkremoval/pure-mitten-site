@@ -628,16 +628,22 @@ section {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 .pricing-card { position: relative; }
-.pricing-card.featured { background: var(--navy); border-color: var(--sky); color: var(--white); }
+.pricing-card.featured {
+  background: var(--navy);
+  border-color: var(--sky);
+  color: var(--white);
+  padding-top: 42px;
+}
 .pricing-card.featured h3,
 .pricing-card.featured .price { color: var(--white); }
 .pricing-card.featured p,
 .pricing-card.featured li { color: rgba(255, 255, 255, 0.72); }
 .badge {
   position: absolute;
-  top: -13px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 3;
   background: var(--sky);
   color: var(--white);
   border-radius: 999px;
