@@ -38,8 +38,12 @@ a { color: inherit; }
   text-align: center;
   text-decoration: none;
   border-bottom: 3px solid var(--sky);
-  box-shadow: 0 5px 20px rgba(0, 78, 140, 0.18);
+  box-shadow:
+    0 0 18px rgba(125, 211, 252, 0.5),
+    0 0 34px rgba(0, 153, 224, 0.34),
+    0 5px 20px rgba(0, 78, 140, 0.18);
   overflow: hidden;
+  animation: banner-passive-glow 3.8s ease-in-out infinite;
 }
 
 .promo-banner::before {
@@ -105,11 +109,30 @@ a { color: inherit; }
   52% { opacity: 0.42; }
 }
 
+@keyframes banner-passive-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 16px rgba(125, 211, 252, 0.46),
+      0 0 30px rgba(0, 153, 224, 0.28),
+      0 5px 20px rgba(0, 78, 140, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 0 26px rgba(125, 211, 252, 0.82),
+      0 0 52px rgba(0, 153, 224, 0.55),
+      0 5px 24px rgba(0, 78, 140, 0.22);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .promo-banner {
+    animation: none;
+  }
+
   .promo-banner::before,
   .promo-banner::after {
     animation: none;
-    opacity: 0;
+    opacity: 0.18;
   }
 }
 
