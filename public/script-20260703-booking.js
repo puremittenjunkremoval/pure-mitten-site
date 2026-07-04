@@ -254,7 +254,7 @@ if (bookingForm) {
       }));
       window.location.href = `thanks?booking=${encodeURIComponent(confirmationNumber)}`;
     } catch (error) {
-      setStatus(submitStatus, "Something went wrong sending the request. Please call or text 734-480-8190.", "bad");
+      setStatus(submitStatus, error.message || "Something went wrong sending the request. Please call or text 734-480-8190.", "bad");
     } finally {
       if (submitButton) submitButton.disabled = false;
     }
