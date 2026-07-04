@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Quote | Pure Mitten Junk Removal</title>
-  <meta name="description" content="Request a free junk removal quote from Pure Mitten Junk Removal. Send your name, phone number, job details, and optional photos for review." />
+  <title>Book Junk Removal Pickup | Pure Mitten Junk Removal</title>
+  <meta name="description" content="Book a junk removal pickup request with Pure Mitten Junk Removal. Enter your city, choose a preferred appointment window, and send pickup details." />
   <link rel="canonical" href="https://puremittenjunkremoval.com/quote.html" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-truck-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-truck-192.png" />
@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles-20260611-passive-glow.css" />
+  <link rel="stylesheet" href="styles-20260703-booking.css" />
 </head>
 <body>
   <a class="promo-banner" href="new-customer-discount.html">
@@ -88,99 +88,165 @@
 
   <header class="page-hero quote-hero">
     <div class="page-hero-inner reveal">
-      <div class="eyebrow">Free Quote</div>
-      <h1>Tell us what needs to go.</h1>
-      <p class="page-sub">Tell us what needs to go by sending the details, adding photos if you have them, and we will follow up with a clear estimate before any work starts.</p>
+      <div class="eyebrow">Check Availability</div>
+      <h1>Book a pickup window.</h1>
+      <p class="page-sub">Start with your city, choose a preferred day and time frame, then send the pickup details. We will confirm the appointment window before the truck rolls.</p>
     </div>
   </header>
 
   <section class="quote-section">
-    <div class="section-inner quote-layout">
-      <form class="quote-form reveal" action="https://formsubmit.co/info@puremittenjunkremoval.com" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="_subject" value="New Free Quote Request - Pure Mitten Junk Removal" />
+    <div class="section-inner booking-layout">
+      <form class="quote-form booking-form reveal" action="https://formsubmit.co/info@puremittenjunkremoval.com" method="POST" enctype="multipart/form-data" data-booking-form>
+        <input type="hidden" name="_subject" value="New Pickup Booking Request - Pure Mitten Junk Removal" />
         <input type="hidden" name="_cc" value="sales@puremittenjunkremoval.com" />
         <input type="hidden" name="_captcha" value="false" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_next" value="https://puremittenjunkremoval.com/thanks.html" />
         <input type="text" name="_honey" class="hidden-field" tabindex="-1" autocomplete="off" />
 
-        <div class="form-grid">
-          <label class="field">
-            <span>Name</span>
-            <input type="text" name="name" autocomplete="name" required />
-          </label>
-          <label class="field">
-            <span>Phone Number</span>
-            <input type="tel" name="phone" autocomplete="tel" required />
-          </label>
-          <label class="field">
-            <span>Email</span>
-            <input type="email" name="email" autocomplete="email" />
-          </label>
-          <label class="field">
-            <span>City</span>
-            <input type="text" name="city" autocomplete="address-level2" />
-          </label>
-        </div>
+        <ol class="booking-progress" aria-label="Booking steps">
+          <li class="is-active" data-progress-step="1"><span>1</span> Area</li>
+          <li data-progress-step="2"><span>2</span> Appointment</li>
+          <li data-progress-step="3"><span>3</span> Details</li>
+        </ol>
 
-        <div class="form-grid">
-          <label class="field">
-            <span>What are we removing?</span>
-            <select name="junk_type" required>
-              <option value="">Choose one</option>
-              <option>Furniture</option>
-              <option>Appliances</option>
-              <option>Garage or basement cleanout</option>
-              <option>Estate or rental cleanout</option>
-              <option>Yard waste</option>
-              <option>Construction debris</option>
-              <option>Hot tub, shed, or large heavy item</option>
-              <option>Other</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>Estimated load size</span>
-            <select name="estimated_load">
-              <option value="">Not sure yet</option>
-              <option>Minimum pickup</option>
-              <option>1/4 load</option>
-              <option>Half load</option>
-              <option>Full load</option>
-            </select>
-          </label>
-        </div>
-
-        <fieldset class="field challenge-field">
-          <legend>Anything we should know?</legend>
-          <div class="checkbox-grid">
-            <label><input type="checkbox" name="job_notes[]" value="Heavy item" /> Heavy item</label>
-            <label><input type="checkbox" name="job_notes[]" value="Hard to reach" /> Hard to reach</label>
-            <label><input type="checkbox" name="job_notes[]" value="Upstairs or downstairs" /> Upstairs or downstairs</label>
-            <label><input type="checkbox" name="job_notes[]" value="Needs disassembly" /> Needs disassembly</label>
-            <label><input type="checkbox" name="job_notes[]" value="Curbside pickup" /> Curbside pickup</label>
-            <label><input type="checkbox" name="job_notes[]" value="Tight hallway or doorway" /> Tight hallway or doorway</label>
+        <div class="booking-step is-active" data-booking-step="1">
+          <div class="section-tag">Step 1</div>
+          <h2>Where is the pickup?</h2>
+          <p class="booking-step-sub">Enter the city first so we know where the pickup request is located.</p>
+          <div class="form-grid">
+            <label class="field">
+              <span>City</span>
+              <input type="text" name="pickup_city" autocomplete="address-level2" placeholder="Ann Arbor, Ypsilanti, Canton..." required />
+            </label>
+            <label class="field">
+              <span>ZIP Code</span>
+              <input type="text" name="pickup_zip" inputmode="numeric" autocomplete="postal-code" placeholder="48197" />
+            </label>
           </div>
-        </fieldset>
+          <button class="btn btn-blue booking-next" type="button" data-next-step="2">Check Availability</button>
+        </div>
 
-        <label class="field">
-          <span>Details</span>
-          <textarea name="details" rows="6" placeholder="Tell us what items need to go, where they are located, and when you would like them removed."></textarea>
-        </label>
+        <div class="booking-step" data-booking-step="2">
+          <div class="section-tag">Step 2</div>
+          <h2>Choose a preferred appointment.</h2>
+          <p class="booking-step-sub">Pick the day and time frame that works best. We will email and/or text you to confirm the exact schedule.</p>
+          <div class="form-grid">
+            <label class="field">
+              <span>Preferred Day</span>
+              <input type="date" name="preferred_day" data-booking-date required />
+            </label>
+            <label class="field">
+              <span>Preferred Time Frame</span>
+              <select name="preferred_window" required>
+                <option value="">Choose a window</option>
+                <option>Morning: 8 AM - 10 AM</option>
+                <option>Late Morning: 10 AM - 12 PM</option>
+                <option>Afternoon: 12 PM - 2 PM</option>
+                <option>Late Afternoon: 2 PM - 4 PM</option>
+                <option>Evening: 4 PM - 6 PM</option>
+              </select>
+            </label>
+          </div>
+          <p class="booking-note">Appointment windows are requested, not automatically confirmed. True live slot locking requires a connected booking calendar or backend.</p>
+          <div class="booking-actions">
+            <button class="btn btn-outline booking-back" type="button" data-prev-step="1">Back</button>
+            <button class="btn btn-blue booking-next" type="button" data-next-step="3">Continue</button>
+          </div>
+        </div>
 
-        <label class="field">
-          <span>Photos</span>
-          <input type="file" name="attachment" accept="image/png, image/jpeg, image/webp, image/heic" multiple />
-        </label>
+        <div class="booking-step" data-booking-step="3">
+          <div class="section-tag">Step 3</div>
+          <h2>Pickup details.</h2>
+          <p class="booking-step-sub">Tell us who to contact, where to go, and what needs to be removed.</p>
+          <div class="form-grid">
+            <label class="field">
+              <span>Home or Business?</span>
+              <select name="location_type" required>
+                <option value="">Choose one</option>
+                <option>Home</option>
+                <option>Business</option>
+                <option>Rental property</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Will you be there?</span>
+              <select name="customer_present" required>
+                <option value="">Choose one</option>
+                <option>Yes, I will be there</option>
+                <option>No, but items are accessible</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+          </div>
 
-        <button class="btn btn-blue submit-btn" type="submit">Send Quote Request</button>
+          <label class="field">
+            <span>Pickup Address</span>
+            <input type="text" name="pickup_address" autocomplete="street-address" placeholder="Street address, apartment, unit, or gate details" required />
+          </label>
+
+          <div class="form-grid">
+            <label class="field">
+              <span>Name</span>
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label class="field">
+              <span>Phone Number</span>
+              <input type="tel" name="phone" autocomplete="tel" required />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label class="field">
+              <span>Estimated Load Size</span>
+              <select name="estimated_load">
+                <option value="">Not sure yet</option>
+                <option>Minimum pickup</option>
+                <option>1/4 load</option>
+                <option>Half load</option>
+                <option>Full load</option>
+              </select>
+            </label>
+          </div>
+
+          <fieldset class="field challenge-field">
+            <legend>Anything we should know?</legend>
+            <div class="checkbox-grid">
+              <label><input type="checkbox" name="job_notes[]" value="Heavy item" /> Heavy item</label>
+              <label><input type="checkbox" name="job_notes[]" value="Hard to reach" /> Hard to reach</label>
+              <label><input type="checkbox" name="job_notes[]" value="Upstairs or downstairs" /> Upstairs or downstairs</label>
+              <label><input type="checkbox" name="job_notes[]" value="Needs disassembly" /> Needs disassembly</label>
+              <label><input type="checkbox" name="job_notes[]" value="Curbside pickup" /> Curbside pickup</label>
+              <label><input type="checkbox" name="job_notes[]" value="Tight hallway or doorway" /> Tight hallway or doorway</label>
+            </div>
+          </fieldset>
+
+          <label class="field">
+            <span>Items to Remove</span>
+            <textarea name="items_to_remove" rows="5" placeholder="List the items you want removed, how much there is, and where it is located." required></textarea>
+          </label>
+
+          <label class="field">
+            <span>Photos</span>
+            <input type="file" name="attachment" accept="image/png, image/jpeg, image/webp, image/heic" multiple />
+          </label>
+
+          <div class="booking-actions">
+            <button class="btn btn-outline booking-back" type="button" data-prev-step="2">Back</button>
+            <button class="btn btn-blue submit-btn" type="submit">Send Booking Request</button>
+          </div>
+        </div>
       </form>
 
       <aside class="quote-side reveal">
         <img class="about-logo" src="assets/pure%20mitten%20junk%20removal.png" alt="Pure Mitten Junk Removal logo" />
-        <div class="map-title">Fast, Clear, Local</div>
-        <p class="section-sub">Photos help us estimate faster, especially for heavy items, tight spaces, stairs, or larger cleanouts.</p>
+        <div class="map-title">Booking Request</div>
+        <p class="section-sub">Choose a preferred pickup window and send the details. We will notify the team by email and follow up to confirm availability.</p>
         <p class="quote-phone"><strong>Call or text:</strong> <a href="tel:+17344808190">734-480-8190</a></p>
-        <div class="chips"><span class="chip">Furniture</span><span class="chip">Appliances</span><span class="chip">Cleanouts</span><span class="chip">Debris</span></div>
+        <div class="chips"><span class="chip">Choose City</span><span class="chip">Pick Window</span><span class="chip">Send Details</span></div>
+        <p class="booking-note">Live double-booking prevention needs a shared calendar or database. This form sends the requested window to your business email.</p>
       </aside>
     </div>
   </section>
@@ -200,6 +266,6 @@
       <span class="theme-toggle-text">Day Mode</span>
     </button>
   </footer>
-  <script src="script-20260601.js"></script>
+  <script src="script-20260703-booking.js"></script>
 </body>
 </html>
