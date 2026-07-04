@@ -12,7 +12,7 @@ const TIME_ZONE = "America/Detroit";
 const MAX_ATTACHMENTS = 5;
 const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
 const DEFAULT_NOTIFY_TO = "info@puremittenjunkremoval.com,contact@puremittenjunkremoval.com";
-const DEFAULT_BOOKING_FROM = "Pure Mitten Junk Removal <bookings@puremittenjunkremoval.com>";
+const DEFAULT_BOOKING_FROM = "Pure Mitten Junk Removal <contact@puremittenjunkremoval.com>";
 let tokenCache = null;
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), {

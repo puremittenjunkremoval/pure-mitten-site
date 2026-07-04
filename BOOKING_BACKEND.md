@@ -43,7 +43,7 @@ The Google Calendar event itself becomes the main booking record. If you also wa
 ```text
 RESEND_API_KEY=your_resend_api_key
 BOOKING_NOTIFY_TO=info@puremittenjunkremoval.com,contact@puremittenjunkremoval.com
-BOOKING_FROM=Pure Mitten Junk Removal <bookings@puremittenjunkremoval.com>
+BOOKING_FROM=Pure Mitten Junk Removal <contact@puremittenjunkremoval.com>
 ```
 
 The `BOOKING_FROM` domain needs to be verified in Resend.
