@@ -23,16 +23,15 @@ export async function onRequestGet({ env }) {
   const missingCalendar = missing(env, calendarVars);
   const missingEmail = missing(env, emailVars);
   const resendConfigured = Boolean(env.RESEND_API_KEY);
-  const calendarEmailConfigured = missingCalendar.length === 0 && missingEmail.length === 0;
+  const emailConfigured = missingEmail.length === 0 && resendConfigured;
 
   return json({
-    ok: missingCalendar.length === 0 && (calendarEmailConfigured || resendConfigured),
+    ok: missingCalendar.length === 0 && emailConfigured,
     calendarConfigured: missingCalendar.length === 0,
-    emailConfigured: calendarEmailConfigured || resendConfigured,
-    calendarEmailConfigured,
+    emailConfigured,
     resendConfigured,
     missingCalendar,
     missingEmail,
     missingResend: resendConfigured ? [] : ["RESEND_API_KEY"],
-  }, missingCalendar.length === 0 && (calendarEmailConfigured || resendConfigured) ? 200 : 503);
+  }, missingCalendar.length === 0 && emailConfigured ? 200 : 503);
 }

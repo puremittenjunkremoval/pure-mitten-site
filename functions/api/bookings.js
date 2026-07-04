@@ -387,7 +387,7 @@ export async function onRequestPost({ request, env }) {
       return json({ message: "That pickup window is no longer available. Please choose another time." }, 409);
     }
 
-    const response = await googleRequest(env, `/calendars/${calendar}/events?sendUpdates=all`, {
+    const response = await googleRequest(env, `/calendars/${calendar}/events?sendUpdates=none`, {
       method: "POST",
       body: JSON.stringify({
         id: eventId,
@@ -396,10 +396,6 @@ export async function onRequestPost({ request, env }) {
         description: buildDescription(booking),
         start: { dateTime: range.start, timeZone },
         end: { dateTime: range.end, timeZone },
-        attendees: notificationRecipients(env).map((email) => ({ email })),
-        guestsCanInviteOthers: false,
-        guestsCanModify: false,
-        guestsCanSeeOtherGuests: true,
         extendedProperties: {
           private: {
             source: "pure-mitten-booking-form",
