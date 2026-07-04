@@ -11,6 +11,8 @@ const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const TIME_ZONE = "America/Detroit";
 const MAX_ATTACHMENTS = 5;
 const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
+const DEFAULT_NOTIFY_TO = "info@puremittenjunkremoval.com,contact@puremittenjunkremoval.com";
+const DEFAULT_BOOKING_FROM = "Pure Mitten Junk Removal <bookings@puremittenjunkremoval.com>";
 let tokenCache = null;
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), {
@@ -24,6 +26,12 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), {
 const clean = (value) => String(value || "").trim();
 const isIsoDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value || "");
 const field = (formData, name) => clean(formData.get(name));
+
+const missingCalendarConfig = (env) => [
+  "GOOGLE_SERVICE_ACCOUNT_EMAIL",
+  "GOOGLE_PRIVATE_KEY",
+  "GOOGLE_CALENDAR_ID",
+].filter((name) => !env[name]);
 
 const escapeHtml = (value) => clean(value)
   .replace(/&/g, "&amp;")
@@ -272,11 +280,14 @@ const collectAttachments = async (files) => {
 };
 
 const sendNotificationEmail = async (env, booking, files) => {
-  if (!env.RESEND_API_KEY || !env.BOOKING_NOTIFY_TO || !env.BOOKING_FROM) {
-    return { sent: false, reason: "Email environment variables are not configured." };
+  if (!env.RESEND_API_KEY) {
+    console.error("Booking email skipped: RESEND_API_KEY is not configured.");
+    return { sent: false, reason: "RESEND_API_KEY is not configured." };
   }
 
   const attachments = await collectAttachments(files);
+  const notifyTo = env.BOOKING_NOTIFY_TO || DEFAULT_NOTIFY_TO;
+  const bookingFrom = env.BOOKING_FROM || DEFAULT_BOOKING_FROM;
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -284,8 +295,8 @@ const sendNotificationEmail = async (env, booking, files) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: env.BOOKING_FROM,
-      to: env.BOOKING_NOTIFY_TO.split(",").map((item) => item.trim()).filter(Boolean),
+      from: bookingFrom,
+      to: notifyTo.split(",").map((item) => item.trim()).filter(Boolean),
       subject: `New pickup request: ${booking.preferred_day} ${booking.preferred_window}`,
       html: buildEmailHtml(booking),
       attachments,
@@ -294,6 +305,7 @@ const sendNotificationEmail = async (env, booking, files) => {
 
   if (!response.ok) {
     const message = await response.text();
+    console.error(`Booking email failed: ${message}`);
     return { sent: false, reason: message };
   }
 
@@ -301,6 +313,17 @@ const sendNotificationEmail = async (env, booking, files) => {
 };
 
 export async function onRequestPost({ request, env }) {
+  const missingConfig = missingCalendarConfig(env);
+
+  if (missingConfig.length) {
+    console.error(`Booking calendar config missing: ${missingConfig.join(", ")}`);
+    return json({
+      message: "Online booking is being finished. Please call or text 734-480-8190 and we will get you scheduled.",
+      code: "calendar_config_missing",
+      missing: missingConfig,
+    }, 503);
+  }
+
   const formData = await request.formData();
 
   if (field(formData, "_honey")) {
@@ -392,14 +415,20 @@ export async function onRequestPost({ request, env }) {
 
     const event = await response.json();
     const email = await sendNotificationEmail(env, booking, files);
+    const confirmationNumber = event.id ? event.id.slice(0, 12).toUpperCase() : null;
 
     return json({
       ok: true,
+      confirmationNumber,
       eventId: event.id,
       eventLink: event.htmlLink,
       emailSent: email.sent,
     });
   } catch (error) {
-    return json({ message: "Something went wrong sending the booking request. Please call or text 734-480-8190." }, 500);
+    console.error(`Booking submission failed: ${error?.stack || error?.message || error}`);
+    return json({
+      message: "Something went wrong sending the booking request. Please call or text 734-480-8190.",
+      code: "booking_submit_failed",
+    }, 500);
   }
 }

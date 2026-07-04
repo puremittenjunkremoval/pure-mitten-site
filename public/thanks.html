@@ -91,6 +91,11 @@
       <div class="eyebrow">Request Sent</div>
       <h1>Thanks, we got your request.</h1>
       <p class="page-sub">Thanks, we got your request. We will review the details and follow up as soon as possible to confirm the estimate or pickup window.</p>
+      <div class="confirmation-card" data-confirmation-card hidden>
+        <span>Booking request received</span>
+        <strong data-confirmation-number></strong>
+        <p data-confirmation-window></p>
+      </div>
       <div class="hero-actions">
         <a class="btn btn-primary" href="/">Back Home</a>
         <a class="btn btn-outline" href="pricing">View Pricing</a>
@@ -113,6 +118,23 @@
       <span class="theme-toggle-text">Day Mode</span>
     </button>
   </footer>
+  <script>
+    const confirmationCard = document.querySelector("[data-confirmation-card]");
+    const confirmationNumber = document.querySelector("[data-confirmation-number]");
+    const confirmationWindow = document.querySelector("[data-confirmation-window]");
+    const params = new URLSearchParams(window.location.search);
+    const bookingId = params.get("booking");
+    const savedConfirmation = JSON.parse(sessionStorage.getItem("pureMittenBookingConfirmation") || "null");
+
+    if (confirmationCard && bookingId) {
+      confirmationCard.hidden = false;
+      confirmationNumber.textContent = `Confirmation: ${bookingId}`;
+
+      if (confirmationWindow && savedConfirmation?.preferredDay && savedConfirmation?.preferredWindow) {
+        confirmationWindow.textContent = `${savedConfirmation.preferredDay} · ${savedConfirmation.preferredWindow}`;
+      }
+    }
+  </script>
   <script src="script-20260601.js"></script>
 </body>
 </html>

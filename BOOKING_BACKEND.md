@@ -34,6 +34,8 @@ Use the `private_key` value from the service account JSON for `GOOGLE_PRIVATE_KE
 
 For local testing, put the same values in `.dev.vars`. Do not commit `.dev.vars`.
 
+The booking submit route will not create calendar events unless `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`, and `GOOGLE_CALENDAR_ID` are all set in the production environment.
+
 ## 3. Email notifications
 
 The Google Calendar event itself becomes the main booking record. If you also want email notifications with uploaded photos, add:
@@ -45,6 +47,8 @@ BOOKING_FROM=Pure Mitten Junk Removal <bookings@puremittenjunkremoval.com>
 ```
 
 The `BOOKING_FROM` domain needs to be verified in Resend.
+
+If `BOOKING_NOTIFY_TO` is not set, the function defaults to `info@puremittenjunkremoval.com,contact@puremittenjunkremoval.com`. Email still requires `RESEND_API_KEY`.
 
 ## 4. Cloudflare Pages settings
 
@@ -76,7 +80,10 @@ The availability endpoint also checks the calendar's busy windows, so manually b
 After deployment, visit:
 
 ```text
+https://puremittenjunkremoval.com/api/booking-health
 https://puremittenjunkremoval.com/api/availability?date=2026-07-10
 ```
 
-Then submit the booking form twice for the same date and time window. The first request should create a Google Calendar event, and the second should ask the customer to pick another window.
+The health endpoint should show `calendarConfigured: true` and `emailConfigured: true`.
+
+Then submit the booking form twice for the same date and time window. The first request should create a Google Calendar event, show a confirmation number on the thank-you page, and send the notification email. The second request should ask the customer to pick another window.

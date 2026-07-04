@@ -525,6 +525,39 @@ h1 span { color: #7dd3fc; }
 
 .section-sub { color: var(--muted); }
 
+.confirmation-card {
+  display: inline-grid;
+  gap: 5px;
+  margin: 26px 0 0;
+  padding: 18px 22px;
+  border: 1px solid rgba(125, 211, 252, 0.34);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.16);
+}
+
+.confirmation-card[hidden] {
+  display: none;
+}
+
+.confirmation-card span {
+  color: var(--sky);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+}
+
+.confirmation-card strong {
+  color: var(--white);
+  font-size: 1.1rem;
+}
+
+.confirmation-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .hero-actions,
 .section-actions {
   display: flex;

@@ -246,7 +246,13 @@ if (bookingForm) {
         throw new Error(result.message || "Booking request failed");
       }
 
-      window.location.href = "thanks";
+      const confirmationNumber = result.confirmationNumber || result.eventId || "sent";
+      sessionStorage.setItem("pureMittenBookingConfirmation", JSON.stringify({
+        confirmationNumber,
+        preferredDay: bookingForm.elements.preferred_day?.value || "",
+        preferredWindow: bookingForm.elements.preferred_window?.value || "",
+      }));
+      window.location.href = `thanks?booking=${encodeURIComponent(confirmationNumber)}`;
     } catch (error) {
       setStatus(submitStatus, "Something went wrong sending the request. Please call or text 734-480-8190.", "bad");
     } finally {
