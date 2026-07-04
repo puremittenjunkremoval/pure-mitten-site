@@ -84,6 +84,6 @@ https://puremittenjunkremoval.com/api/booking-health
 https://puremittenjunkremoval.com/api/availability?date=2026-07-10
 ```
 
-The health endpoint should show `calendarConfigured: true` and `emailConfigured: true`.
+The health endpoint should show `calendarConfigured: true` and `emailConfigured: true` after the required Cloudflare production variables are saved and the site has redeployed.
 
 Then submit the booking form twice for the same date and time window. The first request should create a Google Calendar event, show a confirmation number on the thank-you page, and send the notification email. The second request should ask the customer to pick another window.
