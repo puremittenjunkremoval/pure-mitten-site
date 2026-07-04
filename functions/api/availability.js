@@ -1,9 +1,21 @@
 const WINDOWS = [
-  { label: "Morning: 8 AM - 10 AM", start: "08:00", end: "10:00" },
-  { label: "Late Morning: 10 AM - 12 PM", start: "10:00", end: "12:00" },
-  { label: "Afternoon: 12 PM - 2 PM", start: "12:00", end: "14:00" },
-  { label: "Late Afternoon: 2 PM - 4 PM", start: "14:00", end: "16:00" },
-  { label: "Evening: 4 PM - 6 PM", start: "16:00", end: "18:00" },
+  { label: "8 AM - 10 AM", start: "08:00", end: "10:00" },
+  { label: "8:30 AM - 10:30 AM", start: "08:30", end: "10:30" },
+  { label: "9 AM - 11 AM", start: "09:00", end: "11:00" },
+  { label: "9:30 AM - 11:30 AM", start: "09:30", end: "11:30" },
+  { label: "10 AM - 12 PM", start: "10:00", end: "12:00" },
+  { label: "10:30 AM - 12:30 PM", start: "10:30", end: "12:30" },
+  { label: "11 AM - 1 PM", start: "11:00", end: "13:00" },
+  { label: "11:30 AM - 1:30 PM", start: "11:30", end: "13:30" },
+  { label: "12 PM - 2 PM", start: "12:00", end: "14:00" },
+  { label: "12:30 PM - 2:30 PM", start: "12:30", end: "14:30" },
+  { label: "1 PM - 3 PM", start: "13:00", end: "15:00" },
+  { label: "1:30 PM - 3:30 PM", start: "13:30", end: "15:30" },
+  { label: "2 PM - 4 PM", start: "14:00", end: "16:00" },
+  { label: "2:30 PM - 4:30 PM", start: "14:30", end: "16:30" },
+  { label: "3 PM - 5 PM", start: "15:00", end: "17:00" },
+  { label: "3:30 PM - 5:30 PM", start: "15:30", end: "17:30" },
+  { label: "4 PM - 6 PM", start: "16:00", end: "18:00" },
 ];
 
 const CALENDAR_SCOPE = "https://www.googleapis.com/auth/calendar";
