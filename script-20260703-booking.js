@@ -97,6 +97,15 @@ if (bookingForm) {
   const bookingSteps = Array.from(bookingForm.querySelectorAll("[data-booking-step]"));
   const progressSteps = Array.from(bookingForm.querySelectorAll("[data-progress-step]"));
   const dateInput = bookingForm.querySelector("[data-booking-date]");
+  const windowSelect = bookingForm.querySelector("[data-booking-window]");
+  const availabilityStatus = bookingForm.querySelector("[data-booking-status]");
+  const submitStatus = bookingForm.querySelector("[data-booking-submit-status]");
+  const submitButton = bookingForm.querySelector(".submit-btn");
+  const windowLabels = new Map();
+
+  windowSelect?.querySelectorAll("option").forEach((option) => {
+    windowLabels.set(option.value, option.textContent);
+  });
 
   const toDateInputValue = (date) => {
     const year = date.getFullYear();
@@ -123,6 +132,61 @@ if (bookingForm) {
     });
   };
 
+  const setStatus = (element, message = "", tone = "muted") => {
+    if (!element) return;
+    element.textContent = message;
+    element.classList.toggle("is-good", tone === "good");
+    element.classList.toggle("is-bad", tone === "bad");
+    element.classList.toggle("is-muted", tone === "muted");
+  };
+
+  const resetWindowOptions = () => {
+    if (!windowSelect) return;
+    windowSelect.querySelectorAll("option").forEach((option) => {
+      option.disabled = false;
+      option.textContent = windowLabels.get(option.value) || option.textContent;
+    });
+  };
+
+  const updateAvailability = async () => {
+    if (!dateInput?.value || !windowSelect) return;
+
+    resetWindowOptions();
+    setStatus(availabilityStatus, "Checking available windows...", "muted");
+
+    try {
+      const response = await fetch(`/api/availability?date=${encodeURIComponent(dateInput.value)}`, {
+        headers: { "Accept": "application/json" },
+      });
+
+      if (!response.ok) throw new Error("Availability unavailable");
+
+      const data = await response.json();
+      const windows = Array.isArray(data.windows) ? data.windows : [];
+      const unavailable = new Set(windows.filter((slot) => !slot.available).map((slot) => slot.window));
+
+      windowSelect.querySelectorAll("option").forEach((option) => {
+        if (!option.value || !unavailable.has(option.value)) return;
+        option.disabled = true;
+        option.textContent = `${windowLabels.get(option.value) || option.value} - Booked`;
+      });
+
+      if (unavailable.has(windowSelect.value)) windowSelect.value = "";
+
+      const availableCount = windows.filter((slot) => slot.available).length;
+      if (availableCount > 0) {
+        setStatus(availabilityStatus, `${availableCount} pickup window${availableCount === 1 ? "" : "s"} available for that day.`, "good");
+      } else if (windows.length > 0) {
+        setStatus(availabilityStatus, "That day is currently full. Please choose another day.", "bad");
+      } else {
+        setStatus(availabilityStatus, "Choose a preferred pickup window.", "muted");
+      }
+    } catch (error) {
+      resetWindowOptions();
+      setStatus(availabilityStatus, "Choose your preferred window and we will confirm availability.", "muted");
+    }
+  };
+
   const validateStep = (step) => {
     const fields = Array.from(step.querySelectorAll("input, select, textarea"));
     const invalid = fields.find((field) => !field.checkValidity());
@@ -140,6 +204,7 @@ if (bookingForm) {
       const currentStep = button.closest("[data-booking-step]");
       if (!currentStep || !validateStep(currentStep)) return;
       setBookingStep(button.dataset.nextStep);
+      if (button.dataset.nextStep === "2") updateAvailability();
     });
   });
 
@@ -147,5 +212,45 @@ if (bookingForm) {
     button.addEventListener("click", () => {
       setBookingStep(button.dataset.prevStep);
     });
+  });
+
+  dateInput?.addEventListener("change", updateAvailability);
+
+  bookingForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const currentStep = bookingForm.querySelector("[data-booking-step='3']");
+    if (!currentStep || !validateStep(currentStep)) return;
+
+    setStatus(submitStatus, "Sending your booking request...", "muted");
+    if (submitButton) submitButton.disabled = true;
+
+    try {
+      const response = await fetch("/api/bookings", {
+        method: "POST",
+        body: new FormData(bookingForm),
+        headers: { "Accept": "application/json" },
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (response.status === 409) {
+        setBookingStep(2);
+        await updateAvailability();
+        setStatus(availabilityStatus, result.message || "That window was just taken. Please choose another pickup window.", "bad");
+        setStatus(submitStatus, "", "muted");
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(result.message || "Booking request failed");
+      }
+
+      window.location.href = "thanks.html";
+    } catch (error) {
+      setStatus(submitStatus, "Something went wrong sending the request. Please call or text 734-480-8190.", "bad");
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
   });
 }

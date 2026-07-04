@@ -1114,6 +1114,23 @@ section {
   text-align: left;
 }
 
+.booking-status {
+  min-height: 24px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.booking-status.is-good { color: #0c7a4b; }
+.booking-status.is-bad { color: #c52235; }
+.booking-status.is-muted { color: var(--muted); }
+
+.field select option[disabled] {
+  color: #7a93a8;
+}
+
 .booking-actions {
   display: flex;
   gap: 12px;
@@ -1605,6 +1622,13 @@ body.night-mode .booking-step .btn-outline {
 body.night-mode .booking-step-sub {
   color: #b7cde0;
 }
+
+body.night-mode .booking-status {
+  color: #b7cde0;
+}
+
+body.night-mode .booking-status.is-good { color: #7dd3fc; }
+body.night-mode .booking-status.is-bad { color: #ff9aa7; }
 
 body.night-mode .service-icon,
 body.night-mode .value-icon,

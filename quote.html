@@ -96,12 +96,7 @@
 
   <section class="quote-section">
     <div class="section-inner booking-layout">
-      <form class="quote-form booking-form reveal" action="https://formsubmit.co/info@puremittenjunkremoval.com" method="POST" enctype="multipart/form-data" data-booking-form>
-        <input type="hidden" name="_subject" value="New Pickup Booking Request - Pure Mitten Junk Removal" />
-        <input type="hidden" name="_cc" value="sales@puremittenjunkremoval.com" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_next" value="https://puremittenjunkremoval.com/thanks.html" />
+      <form class="quote-form booking-form reveal" data-booking-form>
         <input type="text" name="_honey" class="hidden-field" tabindex="-1" autocomplete="off" />
 
         <ol class="booking-progress" aria-label="Booking steps">
@@ -138,17 +133,18 @@
             </label>
             <label class="field">
               <span>Preferred Time Frame</span>
-              <select name="preferred_window" required>
+              <select name="preferred_window" data-booking-window required>
                 <option value="">Choose a window</option>
-                <option>Morning: 8 AM - 10 AM</option>
-                <option>Late Morning: 10 AM - 12 PM</option>
-                <option>Afternoon: 12 PM - 2 PM</option>
-                <option>Late Afternoon: 2 PM - 4 PM</option>
-                <option>Evening: 4 PM - 6 PM</option>
+                <option value="Morning: 8 AM - 10 AM">Morning: 8 AM - 10 AM</option>
+                <option value="Late Morning: 10 AM - 12 PM">Late Morning: 10 AM - 12 PM</option>
+                <option value="Afternoon: 12 PM - 2 PM">Afternoon: 12 PM - 2 PM</option>
+                <option value="Late Afternoon: 2 PM - 4 PM">Late Afternoon: 2 PM - 4 PM</option>
+                <option value="Evening: 4 PM - 6 PM">Evening: 4 PM - 6 PM</option>
               </select>
             </label>
           </div>
           <p class="booking-note">We will review your preferred window and follow up to confirm the appointment before the pickup.</p>
+          <p class="booking-status" data-booking-status aria-live="polite"></p>
           <div class="booking-actions">
             <button class="btn btn-outline booking-back" type="button" data-prev-step="1">Back</button>
             <button class="btn btn-blue booking-next" type="button" data-next-step="3">Continue</button>
@@ -237,6 +233,7 @@
             <button class="btn btn-outline booking-back" type="button" data-prev-step="2">Back</button>
             <button class="btn btn-blue submit-btn" type="submit">Send Booking Request</button>
           </div>
+          <p class="booking-status" data-booking-submit-status aria-live="polite"></p>
         </div>
       </form>
 
