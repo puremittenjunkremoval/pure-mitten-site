@@ -19,7 +19,7 @@ In Google Cloud Console:
 
 ## 2. Add Cloudflare Pages environment variables
 
-Add these variables to the Pure Mitten Cloudflare Pages project:
+In Cloudflare Pages, open `pure-mitten-site` -> Settings -> Environment variables and add these production variables:
 
 ```text
 GOOGLE_SERVICE_ACCOUNT_EMAIL=your-service-account@project.iam.gserviceaccount.com
@@ -31,6 +31,8 @@ GOOGLE_CALENDAR_TIME_ZONE=America/Detroit
 Use the `client_email` value from the service account JSON for `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
 
 Use the `private_key` value from the service account JSON for `GOOGLE_PRIVATE_KEY`. Keep the `\n` line breaks exactly as Google provides them.
+
+For local testing, put the same values in `.dev.vars`. Do not commit `.dev.vars`.
 
 ## 3. Email notifications
 
@@ -44,13 +46,32 @@ BOOKING_FROM=Pure Mitten Junk Removal <bookings@puremittenjunkremoval.com>
 
 The `BOOKING_FROM` domain needs to be verified in Resend.
 
-## 4. How double-booking prevention works
+## 4. Cloudflare Pages settings
+
+Use these settings if connecting the GitHub repo in the Cloudflare dashboard:
+
+```text
+Project name: pure-mitten-site
+Production branch: main
+Build command: npm install
+Build output directory: public
+Root directory: /
+```
+
+The repository includes:
+
+- `wrangler.jsonc` for Pages project config
+- `public/_routes.json` so only `/api/*` invokes Pages Functions
+- `public/_headers` for basic security and static asset cache headers
+- `functions/api/availability.js` and `functions/api/bookings.js` for booking routes
+
+## 5. How double-booking prevention works
 
 Each pickup window creates one Google Calendar event with a deterministic event ID based on the day and time window. If two customers submit the same window, Google Calendar rejects the second event with a conflict, and the customer is asked to choose another time.
 
 The availability endpoint also checks the calendar's busy windows, so manually blocked calendar time can hide slots from the form.
 
-## 5. Test
+## 6. Test
 
 After deployment, visit:
 
