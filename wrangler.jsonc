@@ -4,6 +4,8 @@
   "pages_build_output_dir": "public",
   "compatibility_date": "2026-07-03",
   "vars": {
-    "GOOGLE_CALENDAR_TIME_ZONE": "America/Detroit"
+    "GOOGLE_CALENDAR_TIME_ZONE": "America/Detroit",
+    "BOOKING_NOTIFY_TO": "info@puremittenjunkremoval.com,contact@puremittenjunkremoval.com",
+    "BOOKING_FROM": "Pure Mitten Junk Removal <bookings@puremittenjunkremoval.com>"
   }
 }
