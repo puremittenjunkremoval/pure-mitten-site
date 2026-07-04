@@ -1,36 +1,40 @@
-# Booking Backend Setup
+# Google Calendar Booking Setup
 
-The booking page now uses live availability checks through two API routes:
+The booking page uses two API routes:
 
 - `/api/availability?date=YYYY-MM-DD`
 - `/api/bookings`
 
-These routes are Cloudflare Pages Functions. They need a Cloudflare D1 database binding named `DB`.
+These are Cloudflare Pages Functions that talk to Google Calendar. Availability checks use Google Calendar busy windows, and booking requests create a calendar event for the selected pickup window.
 
-## 1. Create the D1 database
+## 1. Create the Google service account
 
-Create a Cloudflare D1 database named `pure-mitten-bookings`, then run:
+In Google Cloud Console:
 
-```bash
-npx wrangler d1 execute pure-mitten-bookings --file=database/schema.sql --remote
-```
+1. Create or open a Google Cloud project.
+2. Enable the Google Calendar API.
+3. Create a service account.
+4. Create a JSON key for that service account.
+5. Open the Google Calendar you want to use for bookings, then share it with the service account email and give it permission to make changes to events.
 
-You can also paste `database/schema.sql` into the D1 console in the Cloudflare dashboard.
+## 2. Add Cloudflare Pages environment variables
 
-## 2. Bind the database
-
-In Cloudflare Pages, open the Pure Mitten project settings and add a D1 binding:
+Add these variables to the Pure Mitten Cloudflare Pages project:
 
 ```text
-Variable name: DB
-Database: pure-mitten-bookings
+GOOGLE_SERVICE_ACCOUNT_EMAIL=your-service-account@project.iam.gserviceaccount.com
+GOOGLE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n
+GOOGLE_CALENDAR_ID=your-calendar-id@group.calendar.google.com
+GOOGLE_CALENDAR_TIME_ZONE=America/Detroit
 ```
 
-The database has a unique active slot rule for `preferred_day + preferred_window`, so a second request for the same active window is rejected.
+Use the `client_email` value from the service account JSON for `GOOGLE_SERVICE_ACCOUNT_EMAIL`.
+
+Use the `private_key` value from the service account JSON for `GOOGLE_PRIVATE_KEY`. Keep the `\n` line breaks exactly as Google provides them.
 
 ## 3. Email notifications
 
-Add these environment variables in Cloudflare Pages if you want booking requests emailed:
+The Google Calendar event itself becomes the main booking record. If you also want email notifications with uploaded photos, add:
 
 ```text
 RESEND_API_KEY=your_resend_api_key
@@ -40,7 +44,13 @@ BOOKING_FROM=Pure Mitten Junk Removal <bookings@puremittenjunkremoval.com>
 
 The `BOOKING_FROM` domain needs to be verified in Resend.
 
-## 4. Test
+## 4. How double-booking prevention works
+
+Each pickup window creates one Google Calendar event with a deterministic event ID based on the day and time window. If two customers submit the same window, Google Calendar rejects the second event with a conflict, and the customer is asked to choose another time.
+
+The availability endpoint also checks the calendar's busy windows, so manually blocked calendar time can hide slots from the form.
+
+## 5. Test
 
 After deployment, visit:
 
@@ -48,4 +58,4 @@ After deployment, visit:
 https://puremittenjunkremoval.com/api/availability?date=2026-07-10
 ```
 
-Then submit the booking form twice for the same date and time window. The first request should save, and the second should ask the customer to pick another window.
+Then submit the booking form twice for the same date and time window. The first request should create a Google Calendar event, and the second should ask the customer to pick another window.

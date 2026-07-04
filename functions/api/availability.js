@@ -1,10 +1,15 @@
 const WINDOWS = [
-  "Morning: 8 AM - 10 AM",
-  "Late Morning: 10 AM - 12 PM",
-  "Afternoon: 12 PM - 2 PM",
-  "Late Afternoon: 2 PM - 4 PM",
-  "Evening: 4 PM - 6 PM",
+  { label: "Morning: 8 AM - 10 AM", start: "08:00", end: "10:00" },
+  { label: "Late Morning: 10 AM - 12 PM", start: "10:00", end: "12:00" },
+  { label: "Afternoon: 12 PM - 2 PM", start: "12:00", end: "14:00" },
+  { label: "Late Afternoon: 2 PM - 4 PM", start: "14:00", end: "16:00" },
+  { label: "Evening: 4 PM - 6 PM", start: "16:00", end: "18:00" },
 ];
+
+const CALENDAR_SCOPE = "https://www.googleapis.com/auth/calendar";
+const TOKEN_URL = "https://oauth2.googleapis.com/token";
+const TIME_ZONE = "America/Detroit";
+let tokenCache = null;
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), {
   status,
@@ -16,11 +21,149 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), {
 
 const isIsoDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value || "");
 
-export async function onRequestGet({ request, env }) {
-  if (!env.DB) {
-    return json({ message: "Booking calendar is not configured yet." }, 503);
+const base64Url = (value) => {
+  const bytes = typeof value === "string" ? new TextEncoder().encode(value) : value;
+  let binary = "";
+
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+};
+
+const pemToArrayBuffer = (pem) => {
+  const base64 = pem
+    .replace(/\\n/g, "\n")
+    .replace(/-----BEGIN PRIVATE KEY-----/g, "")
+    .replace(/-----END PRIVATE KEY-----/g, "")
+    .replace(/\s/g, "");
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
   }
 
+  return bytes.buffer;
+};
+
+const getAccessToken = async (env) => {
+  const now = Math.floor(Date.now() / 1000);
+
+  if (tokenCache && tokenCache.expiresAt > now + 60) {
+    return tokenCache.accessToken;
+  }
+
+  if (!env.GOOGLE_SERVICE_ACCOUNT_EMAIL || !env.GOOGLE_PRIVATE_KEY) {
+    throw new Error("Google Calendar service account is not configured.");
+  }
+
+  const header = base64Url(JSON.stringify({ alg: "RS256", typ: "JWT" }));
+  const claim = base64Url(JSON.stringify({
+    iss: env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    scope: CALENDAR_SCOPE,
+    aud: TOKEN_URL,
+    exp: now + 3600,
+    iat: now,
+  }));
+  const unsignedJwt = `${header}.${claim}`;
+  const key = await crypto.subtle.importKey(
+    "pkcs8",
+    pemToArrayBuffer(env.GOOGLE_PRIVATE_KEY),
+    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const signature = await crypto.subtle.sign(
+    "RSASSA-PKCS1-v1_5",
+    key,
+    new TextEncoder().encode(unsignedJwt)
+  );
+  const assertion = `${unsignedJwt}.${base64Url(new Uint8Array(signature))}`;
+  const response = await fetch(TOKEN_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+      assertion,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  const data = await response.json();
+  tokenCache = {
+    accessToken: data.access_token,
+    expiresAt: now + Number(data.expires_in || 3600),
+  };
+
+  return tokenCache.accessToken;
+};
+
+const googleRequest = async (env, path, options = {}) => {
+  if (!env.GOOGLE_CALENDAR_ID) {
+    throw new Error("Google Calendar ID is not configured.");
+  }
+
+  const accessToken = await getAccessToken(env);
+  const response = await fetch(`https://www.googleapis.com/calendar/v3${path}`, {
+    ...options,
+    headers: {
+      "Authorization": `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+      ...(options.headers || {}),
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return response.json();
+};
+
+const zonedTimeToUtc = (date, time, timeZone) => {
+  const [year, month, day] = date.split("-").map(Number);
+  const [hour, minute] = time.split(":").map(Number);
+  const utcGuess = new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).formatToParts(utcGuess);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  const asZoneTime = Date.UTC(
+    Number(values.year),
+    Number(values.month) - 1,
+    Number(values.day),
+    Number(values.hour),
+    Number(values.minute),
+    Number(values.second)
+  );
+  const offset = asZoneTime - utcGuess.getTime();
+
+  return new Date(utcGuess.getTime() - offset);
+};
+
+const slotRange = (date, slot, timeZone) => ({
+  start: zonedTimeToUtc(date, slot.start, timeZone),
+  end: zonedTimeToUtc(date, slot.end, timeZone),
+});
+
+const overlaps = (slot, busy) => {
+  const busyStart = new Date(busy.start);
+  const busyEnd = new Date(busy.end);
+
+  return slot.start < busyEnd && slot.end > busyStart;
+};
+
+export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const date = url.searchParams.get("date");
 
@@ -28,18 +171,27 @@ export async function onRequestGet({ request, env }) {
     return json({ message: "Please choose a valid pickup date." }, 400);
   }
 
-  const result = await env.DB.prepare(`
-    SELECT preferred_window
-    FROM bookings
-    WHERE preferred_day = ?
-      AND status IN ('pending', 'confirmed')
-  `).bind(date).all();
+  try {
+    const timeZone = env.GOOGLE_CALENDAR_TIME_ZONE || TIME_ZONE;
+    const firstSlot = slotRange(date, WINDOWS[0], timeZone);
+    const lastSlot = slotRange(date, WINDOWS[WINDOWS.length - 1], timeZone);
+    const data = await googleRequest(env, "/freeBusy", {
+      method: "POST",
+      body: JSON.stringify({
+        timeMin: firstSlot.start.toISOString(),
+        timeMax: lastSlot.end.toISOString(),
+        timeZone,
+        items: [{ id: env.GOOGLE_CALENDAR_ID }],
+      }),
+    });
+    const busy = data.calendars?.[env.GOOGLE_CALENDAR_ID]?.busy || [];
+    const windows = WINDOWS.map((window) => ({
+      window: window.label,
+      available: !busy.some((busyWindow) => overlaps(slotRange(date, window, timeZone), busyWindow)),
+    }));
 
-  const booked = new Set((result.results || []).map((row) => row.preferred_window));
-  const windows = WINDOWS.map((window) => ({
-    window,
-    available: !booked.has(window),
-  }));
-
-  return json({ date, windows });
+    return json({ date, windows });
+  } catch (error) {
+    return json({ message: "Booking calendar is not configured yet." }, 503);
+  }
 }

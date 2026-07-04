@@ -1,7 +1,2 @@
 name = "pure-mitten-site"
 compatibility_date = "2026-07-03"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "pure-mitten-bookings"
-database_id = "replace-with-your-cloudflare-d1-database-id"
