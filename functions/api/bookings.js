@@ -26,6 +26,10 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), {
 const clean = (value) => String(value || "").trim();
 const isIsoDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value || "");
 const field = (formData, name) => clean(formData.get(name));
+const notificationRecipients = (env) => (env.BOOKING_NOTIFY_TO || DEFAULT_NOTIFY_TO)
+  .split(",")
+  .map((item) => item.trim())
+  .filter(Boolean);
 
 const missingCalendarConfig = (env) => [
   "GOOGLE_SERVICE_ACCOUNT_EMAIL",
@@ -286,7 +290,6 @@ const sendNotificationEmail = async (env, booking, files) => {
   }
 
   const attachments = await collectAttachments(files);
-  const notifyTo = env.BOOKING_NOTIFY_TO || DEFAULT_NOTIFY_TO;
   const bookingFrom = env.BOOKING_FROM || DEFAULT_BOOKING_FROM;
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -296,7 +299,7 @@ const sendNotificationEmail = async (env, booking, files) => {
     },
     body: JSON.stringify({
       from: bookingFrom,
-      to: notifyTo.split(",").map((item) => item.trim()).filter(Boolean),
+      to: notificationRecipients(env),
       subject: `New pickup request: ${booking.preferred_day} ${booking.preferred_window}`,
       html: buildEmailHtml(booking),
       attachments,
@@ -384,7 +387,7 @@ export async function onRequestPost({ request, env }) {
       return json({ message: "That pickup window is no longer available. Please choose another time." }, 409);
     }
 
-    const response = await googleRequest(env, `/calendars/${calendar}/events?sendUpdates=none`, {
+    const response = await googleRequest(env, `/calendars/${calendar}/events?sendUpdates=all`, {
       method: "POST",
       body: JSON.stringify({
         id: eventId,
@@ -393,6 +396,10 @@ export async function onRequestPost({ request, env }) {
         description: buildDescription(booking),
         start: { dateTime: range.start, timeZone },
         end: { dateTime: range.end, timeZone },
+        attendees: notificationRecipients(env).map((email) => ({ email })),
+        guestsCanInviteOthers: false,
+        guestsCanModify: false,
+        guestsCanSeeOtherGuests: true,
         extendedProperties: {
           private: {
             source: "pure-mitten-booking-form",

@@ -13,7 +13,6 @@ const calendarVars = [
 ];
 
 const emailVars = [
-  "RESEND_API_KEY",
   "BOOKING_NOTIFY_TO",
   "BOOKING_FROM",
 ];
@@ -23,12 +22,17 @@ const missing = (env, names) => names.filter((name) => !env[name]);
 export async function onRequestGet({ env }) {
   const missingCalendar = missing(env, calendarVars);
   const missingEmail = missing(env, emailVars);
+  const resendConfigured = Boolean(env.RESEND_API_KEY);
+  const calendarEmailConfigured = missingCalendar.length === 0 && missingEmail.length === 0;
 
   return json({
-    ok: missingCalendar.length === 0 && missingEmail.length === 0,
+    ok: missingCalendar.length === 0 && (calendarEmailConfigured || resendConfigured),
     calendarConfigured: missingCalendar.length === 0,
-    emailConfigured: missingEmail.length === 0,
+    emailConfigured: calendarEmailConfigured || resendConfigured,
+    calendarEmailConfigured,
+    resendConfigured,
     missingCalendar,
     missingEmail,
-  }, missingCalendar.length === 0 && missingEmail.length === 0 ? 200 : 503);
+    missingResend: resendConfigured ? [] : ["RESEND_API_KEY"],
+  }, missingCalendar.length === 0 && (calendarEmailConfigured || resendConfigured) ? 200 : 503);
 }

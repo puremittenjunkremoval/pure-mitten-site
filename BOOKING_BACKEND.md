@@ -38,7 +38,9 @@ The booking submit route will not create calendar events unless `GOOGLE_SERVICE_
 
 ## 3. Email notifications
 
-The Google Calendar event itself becomes the main booking record. If you also want email notifications with uploaded photos, add:
+The Google Calendar event itself becomes the main booking record. The booking function adds `info@puremittenjunkremoval.com` and `contact@puremittenjunkremoval.com` as attendees so Google Calendar can send event notifications.
+
+If you also want a separate email with uploaded photos attached, add:
 
 ```text
 RESEND_API_KEY=your_resend_api_key
@@ -48,7 +50,7 @@ BOOKING_FROM=Pure Mitten Junk Removal <contact@puremittenjunkremoval.com>
 
 The `BOOKING_FROM` domain needs to be verified in Resend.
 
-If `BOOKING_NOTIFY_TO` is not set, the function defaults to `info@puremittenjunkremoval.com,contact@puremittenjunkremoval.com`. Email still requires `RESEND_API_KEY`.
+If `BOOKING_NOTIFY_TO` is not set, the function defaults to `info@puremittenjunkremoval.com,contact@puremittenjunkremoval.com`. Resend is optional, but uploaded photo attachments require `RESEND_API_KEY`.
 
 ## 4. Cloudflare Pages settings
 
