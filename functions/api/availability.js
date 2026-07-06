@@ -175,6 +175,30 @@ const overlaps = (slot, busy) => {
   return slot.start < busyEnd && slot.end > busyStart;
 };
 
+const eventDate = (eventTime) => eventTime?.dateTime || (eventTime?.date ? `${eventTime.date}T00:00:00` : "");
+
+const activeEventBusyRanges = async (env, firstSlot, lastSlot, timeZone) => {
+  const calendar = encodeURIComponent(env.GOOGLE_CALENDAR_ID);
+  const params = new URLSearchParams({
+    timeMin: firstSlot.start.toISOString(),
+    timeMax: lastSlot.end.toISOString(),
+    timeZone,
+    singleEvents: "true",
+    showDeleted: "false",
+    orderBy: "startTime",
+  });
+  const data = await googleRequest(env, `/calendars/${calendar}/events?${params.toString()}`);
+
+  return (data.items || [])
+    .filter((event) => event.status !== "cancelled")
+    .filter((event) => event.transparency !== "transparent")
+    .map((event) => ({
+      start: eventDate(event.start),
+      end: eventDate(event.end),
+    }))
+    .filter((event) => event.start && event.end);
+};
+
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const date = url.searchParams.get("date");
@@ -187,16 +211,7 @@ export async function onRequestGet({ request, env }) {
     const timeZone = env.GOOGLE_CALENDAR_TIME_ZONE || TIME_ZONE;
     const firstSlot = slotRange(date, WINDOWS[0], timeZone);
     const lastSlot = slotRange(date, WINDOWS[WINDOWS.length - 1], timeZone);
-    const data = await googleRequest(env, "/freeBusy", {
-      method: "POST",
-      body: JSON.stringify({
-        timeMin: firstSlot.start.toISOString(),
-        timeMax: lastSlot.end.toISOString(),
-        timeZone,
-        items: [{ id: env.GOOGLE_CALENDAR_ID }],
-      }),
-    });
-    const busy = data.calendars?.[env.GOOGLE_CALENDAR_ID]?.busy || [];
+    const busy = await activeEventBusyRanges(env, firstSlot, lastSlot, timeZone);
     const windows = WINDOWS.map((window) => ({
       window: window.label,
       available: !busy.some((busyWindow) => overlaps(slotRange(date, window, timeZone), busyWindow)),

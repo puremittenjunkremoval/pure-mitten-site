@@ -205,12 +205,49 @@ const slotUtcRange = (date, slot, timeZone) => ({
   end: zonedTimeToUtc(date, slot.end, timeZone),
 });
 
-const deterministicEventId = async (booking) => {
-  const bytes = new TextEncoder().encode(`puremitten:${booking.preferred_day}:${booking.preferred_window}`);
-  const hash = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
-  const hex = Array.from(hash).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+const bookingEventId = () => {
+  const bytes = new Uint8Array(8);
+  crypto.getRandomValues(bytes);
+  const suffix = Array.from(bytes).map((byte) => byte.toString(16).padStart(2, "0")).join("");
 
-  return `pmjr${hex}`;
+  return `pmjr${Date.now().toString(16)}${suffix}`;
+};
+
+const overlaps = (slot, busy) => {
+  const busyStart = new Date(busy.start);
+  const busyEnd = new Date(busy.end);
+
+  return slot.start < busyEnd && slot.end > busyStart;
+};
+
+const eventDate = (eventTime) => eventTime?.dateTime || (eventTime?.date ? `${eventTime.date}T00:00:00` : "");
+
+const activeEventBusyRanges = async (env, firstSlot, lastSlot, timeZone) => {
+  const calendar = encodeURIComponent(env.GOOGLE_CALENDAR_ID);
+  const params = new URLSearchParams({
+    timeMin: firstSlot.start.toISOString(),
+    timeMax: lastSlot.end.toISOString(),
+    timeZone,
+    singleEvents: "true",
+    showDeleted: "false",
+    orderBy: "startTime",
+  });
+  const response = await googleRequest(env, `/calendars/${calendar}/events?${params.toString()}`);
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  const data = await response.json();
+
+  return (data.items || [])
+    .filter((event) => event.status !== "cancelled")
+    .filter((event) => event.transparency !== "transparent")
+    .map((event) => ({
+      start: eventDate(event.start),
+      end: eventDate(event.end),
+    }))
+    .filter((event) => event.start && event.end);
 };
 
 const isFileUpload = (value) => (
@@ -223,24 +260,9 @@ const isFileUpload = (value) => (
 
 const isSlotBusy = async (env, date, slot, timeZone) => {
   const range = slotUtcRange(date, slot, timeZone);
-  const response = await googleRequest(env, "/freeBusy", {
-    method: "POST",
-    body: JSON.stringify({
-      timeMin: range.start.toISOString(),
-      timeMax: range.end.toISOString(),
-      timeZone,
-      items: [{ id: env.GOOGLE_CALENDAR_ID }],
-    }),
-  });
+  const busy = await activeEventBusyRanges(env, range, range, timeZone);
 
-  if (!response.ok) {
-    throw new Error(await response.text());
-  }
-
-  const data = await response.json();
-  const busy = data.calendars?.[env.GOOGLE_CALENDAR_ID]?.busy || [];
-
-  return busy.length > 0;
+  return busy.some((busyWindow) => overlaps(range, busyWindow));
 };
 
 const buildDescription = (booking) => [
@@ -393,7 +415,7 @@ export async function onRequestPost({ request, env }) {
     const timeZone = env.GOOGLE_CALENDAR_TIME_ZONE || TIME_ZONE;
     const range = slotRange(booking.preferred_day, selectedSlot);
     const calendar = encodeURIComponent(env.GOOGLE_CALENDAR_ID);
-    const eventId = await deterministicEventId(booking);
+    const eventId = bookingEventId();
 
     if (await isSlotBusy(env, booking.preferred_day, selectedSlot, timeZone)) {
       return json({ message: "That pickup window is no longer available. Please choose another time." }, 409);
