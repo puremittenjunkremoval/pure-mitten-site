@@ -168,11 +168,11 @@ const slotRange = (date, slot, timeZone) => ({
   end: zonedTimeToUtc(date, slot.end, timeZone),
 });
 
-const overlaps = (slot, busy) => {
+const isSameWindow = (slot, busy) => {
   const busyStart = new Date(busy.start);
   const busyEnd = new Date(busy.end);
 
-  return slot.start < busyEnd && slot.end > busyStart;
+  return slot.start.getTime() === busyStart.getTime() && slot.end.getTime() === busyEnd.getTime();
 };
 
 const eventDate = (eventTime) => eventTime?.dateTime || (eventTime?.date ? `${eventTime.date}T00:00:00` : "");
@@ -214,7 +214,7 @@ export async function onRequestGet({ request, env }) {
     const busy = await activeEventBusyRanges(env, firstSlot, lastSlot, timeZone);
     const windows = WINDOWS.map((window) => ({
       window: window.label,
-      available: !busy.some((busyWindow) => overlaps(slotRange(date, window, timeZone), busyWindow)),
+      available: !busy.some((busyWindow) => isSameWindow(slotRange(date, window, timeZone), busyWindow)),
     }));
 
     return json({ date, windows });
