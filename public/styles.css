@@ -1196,6 +1196,158 @@ section {
   padding: 13px 14px;
 }
 
+.date-field,
+.window-field {
+  position: relative;
+}
+
+.date-field input,
+.window-picker-button {
+  min-height: 58px;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 78, 140, 0.18);
+  border-color: rgba(0, 78, 140, 0.18);
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f5fbff 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 10px 24px rgba(13, 35, 64, 0.06);
+  color: var(--text);
+  cursor: pointer;
+  padding: 16px 48px 16px 16px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.date-field input:hover,
+.window-picker-button:hover {
+  border-color: rgba(0, 153, 224, 0.46);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 28px rgba(0, 78, 140, 0.1);
+}
+
+.date-field input:focus,
+.window-picker-button:focus {
+  transform: translateY(-1px);
+}
+
+.window-picker {
+  position: relative;
+}
+
+.window-picker-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+}
+
+.native-window-select {
+  position: absolute;
+  width: 1px !important;
+  height: 1px !important;
+  min-height: 0 !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.window-picker-menu {
+  position: absolute;
+  z-index: 35;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  display: none;
+  max-height: 270px;
+  overflow-y: auto;
+  padding: 8px;
+  border: 1px solid rgba(0, 78, 140, 0.16);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 20px 45px rgba(13, 35, 64, 0.16);
+}
+
+.window-picker.is-open .window-picker-menu {
+  display: grid;
+  gap: 6px;
+}
+
+.window-picker-option {
+  width: 100%;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  padding: 11px 12px;
+  text-align: left;
+}
+
+.window-picker-option:hover,
+.window-picker-option.is-selected {
+  background: var(--ice);
+  color: var(--navy);
+}
+
+.window-picker-option:disabled {
+  color: #7a93a8;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.date-field::after {
+  content: "";
+  position: absolute;
+  right: 17px;
+  bottom: 20px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--sky);
+  border-radius: 4px;
+  box-shadow: inset 0 5px 0 rgba(0, 153, 224, 0.16);
+  pointer-events: none;
+}
+
+.date-field::before {
+  content: "";
+  position: absolute;
+  right: 21px;
+  bottom: 33px;
+  width: 10px;
+  height: 2px;
+  background: var(--sky);
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.window-field::after {
+  content: "";
+  position: absolute;
+  right: 19px;
+  bottom: 25px;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--sky);
+  border-bottom: 2px solid var(--sky);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.date-field input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  opacity: 0;
+  cursor: pointer;
+}
+
 .field textarea { resize: vertical; min-height: 138px; }
 .field input:focus,
 .field select:focus,
@@ -1631,6 +1783,32 @@ body.night-mode .field textarea {
   background: #07111d;
   border-color: rgba(125, 211, 252, 0.22);
   color: #e8f4ff;
+}
+
+body.night-mode .date-field input,
+body.night-mode .window-picker-button {
+  background:
+    linear-gradient(180deg, #0d1b2b 0%, #07111d 100%);
+  border-color: rgba(125, 211, 252, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+body.night-mode .window-picker-menu {
+  background: #07111d;
+  border-color: rgba(125, 211, 252, 0.22);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.32);
+}
+
+body.night-mode .window-picker-option {
+  color: #e8f4ff;
+}
+
+body.night-mode .window-picker-option:hover,
+body.night-mode .window-picker-option.is-selected {
+  background: rgba(125, 211, 252, 0.12);
+  color: #7dd3fc;
 }
 
 body.night-mode .field input::placeholder,

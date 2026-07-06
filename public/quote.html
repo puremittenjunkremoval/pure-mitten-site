@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles-20260704-mobile-quote.css" />
+  <link rel="stylesheet" href="styles-20260706-appointment-controls.css" />
 </head>
 <body>
   <a class="promo-banner" href="new-customer-discount">
@@ -127,13 +127,13 @@
           <h2>Choose a preferred appointment.</h2>
           <p class="booking-step-sub">Pick the day and time frame that works best. We will email and/or text you to confirm the exact schedule.</p>
           <div class="form-grid">
-            <label class="field">
+            <label class="field date-field">
               <span>Preferred Day</span>
               <input type="date" name="preferred_day" data-booking-date required />
             </label>
-            <label class="field">
+            <label class="field window-field">
               <span>Preferred Time Frame</span>
-              <select name="preferred_window" data-booking-window required>
+              <select class="native-window-select" name="preferred_window" data-booking-window required aria-hidden="true" tabindex="-1">
                 <option value="">Choose a window</option>
                 <option value="8 AM - 10 AM">8 AM - 10 AM</option>
                 <option value="8:30 AM - 10:30 AM">8:30 AM - 10:30 AM</option>
@@ -153,6 +153,12 @@
                 <option value="3:30 PM - 5:30 PM">3:30 PM - 5:30 PM</option>
                 <option value="4 PM - 6 PM">4 PM - 6 PM</option>
               </select>
+              <div class="window-picker" data-window-picker>
+                <button class="window-picker-button" type="button" data-window-picker-button aria-haspopup="listbox" aria-expanded="false">
+                  <span data-window-picker-text>Choose a window</span>
+                </button>
+                <div class="window-picker-menu" data-window-picker-menu role="listbox" aria-label="Preferred time frame"></div>
+              </div>
             </label>
           </div>
           <p class="booking-note">We will review your preferred window and follow up to confirm the appointment before the pickup.</p>
@@ -275,6 +281,6 @@
       <span class="theme-toggle-text">Day Mode</span>
     </button>
   </footer>
-  <script src="script-20260705-booking.js"></script>
+  <script src="script-20260706-booking.js"></script>
 </body>
 </html>
