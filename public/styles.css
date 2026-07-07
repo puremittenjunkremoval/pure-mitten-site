@@ -1159,6 +1159,75 @@ section {
   background: rgba(0, 153, 224, 0.08);
 }
 
+.job-gallery-section {
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+}
+
+.job-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(260px, 0.72fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+.job-photo-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
+  border: 1px solid rgba(0, 78, 140, 0.14);
+  border-radius: 8px;
+  background: #07111d;
+  box-shadow: 0 18px 38px rgba(13, 35, 64, 0.12);
+}
+
+.job-photo-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 46%;
+  background: linear-gradient(180deg, rgba(7, 17, 29, 0) 0%, rgba(7, 17, 29, 0.86) 100%);
+  pointer-events: none;
+}
+
+.job-photo-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+}
+
+.job-photo-card div {
+  position: absolute;
+  z-index: 1;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  color: var(--white);
+}
+
+.job-photo-card span {
+  display: inline-flex;
+  margin-bottom: 8px;
+  padding: 5px 9px;
+  border: 1px solid rgba(125, 211, 252, 0.4);
+  border-radius: 999px;
+  background: rgba(0, 78, 140, 0.72);
+  color: #dff2ff;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.job-photo-card p {
+  max-width: 320px;
+  color: #e8f4ff;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1646,6 +1715,7 @@ body.night-mode {
 body.night-mode .band,
 body.night-mode .quote-section,
 body.night-mode .brothers-section,
+body.night-mode .job-gallery-section,
 body.night-mode .seo-section {
   background: #07111d;
 }
@@ -1722,6 +1792,11 @@ body.night-mode .discount-note {
   border-left-color: #7dd3fc;
   color: #b7cde0;
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+}
+
+body.night-mode .job-photo-card {
+  border-color: rgba(125, 211, 252, 0.18);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
 }
 
 body.night-mode .booking-progress li,
@@ -2040,6 +2115,7 @@ body.night-mode .nav-quote:hover {
   .form-grid,
   .booking-progress,
   .checkbox-grid,
+  .job-gallery,
   .photo-grid { grid-template-columns: 1fr; }
   .quote-form,
   .quote-side { padding: 24px; }
