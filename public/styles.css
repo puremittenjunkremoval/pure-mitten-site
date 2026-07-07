@@ -1369,6 +1369,82 @@ section {
   text-decoration: line-through;
 }
 
+.address-autocomplete-field {
+  position: relative;
+}
+
+.address-suggestions {
+  position: absolute;
+  z-index: 45;
+  top: calc(100% - 8px);
+  left: 0;
+  right: 0;
+  display: none;
+  overflow: hidden;
+  border: 1px solid rgba(0, 78, 140, 0.16);
+  border-radius: 0 0 10px 10px;
+  background: #ffffff;
+  box-shadow: 0 20px 45px rgba(13, 35, 64, 0.16);
+}
+
+.address-suggestions.is-open {
+  display: block;
+}
+
+.address-suggestion {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 10px;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 78, 140, 0.08);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  padding: 11px 13px;
+  text-align: left;
+}
+
+.address-suggestion:last-child {
+  border-bottom: 0;
+}
+
+.address-suggestion:hover,
+.address-suggestion.is-active {
+  background: var(--ice);
+}
+
+.address-pin {
+  color: #8fa9bd;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.address-main {
+  display: block;
+  color: var(--text);
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.address-secondary {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.address-powered {
+  padding: 7px 13px;
+  color: #7a93a8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-align: right;
+}
+
 .date-field::after {
   content: "";
   position: absolute;
@@ -1884,6 +1960,30 @@ body.night-mode .window-picker-option:hover,
 body.night-mode .window-picker-option.is-selected {
   background: rgba(125, 211, 252, 0.12);
   color: #7dd3fc;
+}
+
+body.night-mode .address-suggestions {
+  background: #07111d;
+  border-color: rgba(125, 211, 252, 0.22);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.32);
+}
+
+body.night-mode .address-suggestion {
+  border-bottom-color: rgba(125, 211, 252, 0.12);
+}
+
+body.night-mode .address-suggestion:hover,
+body.night-mode .address-suggestion.is-active {
+  background: rgba(125, 211, 252, 0.12);
+}
+
+body.night-mode .address-main {
+  color: #e8f4ff;
+}
+
+body.night-mode .address-secondary,
+body.night-mode .address-powered {
+  color: #b7cde0;
 }
 
 body.night-mode .field input::placeholder,

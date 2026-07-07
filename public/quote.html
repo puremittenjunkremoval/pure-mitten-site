@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles-20260706-appointment-controls.css" />
+  <link rel="stylesheet" href="styles-20260707-address-autocomplete.css" />
 </head>
 <body>
   <nav class="site-nav">
@@ -191,9 +191,10 @@
             </label>
           </div>
 
-          <label class="field">
+          <label class="field address-autocomplete-field">
             <span>Pickup Address</span>
-            <input type="text" name="pickup_address" autocomplete="street-address" placeholder="Street address, apartment, unit, or gate details" required />
+            <input type="text" name="pickup_address" autocomplete="street-address" placeholder="Street address, apartment, unit, or gate details" data-address-input required />
+            <div class="address-suggestions" data-address-suggestions role="listbox" aria-label="Address suggestions"></div>
           </label>
 
           <div class="form-grid">
@@ -277,6 +278,6 @@
       <span class="theme-toggle-text">Day Mode</span>
     </button>
   </footer>
-  <script src="script-20260706-booking.js"></script>
+  <script src="script-20260707-address-booking.js"></script>
 </body>
 </html>
