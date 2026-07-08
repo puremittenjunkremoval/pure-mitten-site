@@ -942,10 +942,11 @@ section {
 
 .brother-photo {
   width: 100%;
+  height: auto;
   aspect-ratio: 1;
   display: block;
   object-fit: cover;
-  object-position: center 32%;
+  object-position: center center;
   border-radius: 8px;
   border: 1px solid rgba(0, 78, 140, 0.18);
   box-shadow: 0 14px 32px rgba(13, 35, 64, 0.14);
