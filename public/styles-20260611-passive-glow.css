@@ -973,6 +973,18 @@ section {
   margin-bottom: 22px;
 }
 
+.brother-photo {
+  width: 100%;
+  aspect-ratio: 1;
+  display: block;
+  object-fit: cover;
+  object-position: center 32%;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 78, 140, 0.18);
+  box-shadow: 0 14px 32px rgba(13, 35, 64, 0.14);
+  margin-bottom: 22px;
+}
+
 .brother-card p {
   color: var(--muted);
   line-height: 1.65;
