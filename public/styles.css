@@ -1362,6 +1362,99 @@ section {
   gap: 6px;
 }
 
+.date-picker-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  display: none;
+  padding: 12px;
+  border: 1px solid rgba(0, 78, 140, 0.16);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 20px 45px rgba(13, 35, 64, 0.16);
+}
+
+.date-field.is-open .date-picker-menu {
+  display: block;
+}
+
+.date-picker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.date-picker-title {
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+.date-picker-nav,
+.date-picker-day {
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+}
+
+.date-picker-nav {
+  width: 36px;
+  height: 36px;
+  background: var(--ice);
+  color: var(--navy);
+  font-size: 1.1rem;
+}
+
+.date-picker-weekdays,
+.date-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.date-picker-weekdays {
+  margin-bottom: 6px;
+}
+
+.date-picker-weekdays span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.date-picker-day {
+  min-height: 38px;
+}
+
+.date-picker-nav:hover,
+.date-picker-day:hover,
+.date-picker-day.is-selected {
+  background: var(--sky);
+  color: var(--white);
+}
+
+.date-picker-day.is-muted {
+  color: #8fa9bd;
+}
+
+.date-picker-nav:disabled,
+.date-picker-day:disabled {
+  background: transparent;
+  color: #c3d2dc;
+  cursor: not-allowed;
+}
+
 .window-picker-option {
   width: 100%;
   border: 0;
@@ -1964,20 +2057,40 @@ body.night-mode .window-picker-button {
     0 12px 28px rgba(0, 0, 0, 0.22);
 }
 
-body.night-mode .window-picker-menu {
+body.night-mode .window-picker-menu,
+body.night-mode .date-picker-menu {
   background: #07111d;
   border-color: rgba(125, 211, 252, 0.22);
   box-shadow: 0 22px 46px rgba(0, 0, 0, 0.32);
 }
 
-body.night-mode .window-picker-option {
+body.night-mode .window-picker-option,
+body.night-mode .date-picker-day,
+body.night-mode .date-picker-title {
   color: #e8f4ff;
 }
 
 body.night-mode .window-picker-option:hover,
-body.night-mode .window-picker-option.is-selected {
+body.night-mode .window-picker-option.is-selected,
+body.night-mode .date-picker-day:hover,
+body.night-mode .date-picker-day.is-selected {
   background: rgba(125, 211, 252, 0.12);
   color: #7dd3fc;
+}
+
+body.night-mode .date-picker-nav {
+  background: rgba(125, 211, 252, 0.1);
+  color: #7dd3fc;
+}
+
+body.night-mode .date-picker-day.is-muted,
+body.night-mode .date-picker-weekdays span {
+  color: #7894aa;
+}
+
+body.night-mode .date-picker-day:disabled,
+body.night-mode .date-picker-nav:disabled {
+  color: #425a70;
 }
 
 body.night-mode .address-suggestions {

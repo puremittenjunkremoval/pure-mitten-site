@@ -1401,6 +1401,29 @@ footer {
 }
 
 .footer-contact { margin-top: 4px; color: rgba(255, 255, 255, 0.7); }
+.footer-social {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.footer-social span:first-child {
+  color: rgba(255, 255, 255, 0.58);
+  font-weight: 800;
+}
+
+.footer-social a {
+  color: #7dd3fc;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.footer-social a:hover { color: var(--white); }
 
 .theme-toggle {
   display: inline-flex;

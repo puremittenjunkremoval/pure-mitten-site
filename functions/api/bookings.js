@@ -21,6 +21,7 @@ const WINDOWS = [
 const CALENDAR_SCOPE = "https://www.googleapis.com/auth/calendar";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const TIME_ZONE = "America/Detroit";
+const MIN_LEAD_TIME_MINUTES = 120;
 const MAX_ATTACHMENTS = 5;
 const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
 const DEFAULT_NOTIFY_TO = "info@puremittenjunkremoval.com,contact@puremittenjunkremoval.com";
@@ -204,6 +205,10 @@ const slotUtcRange = (date, slot, timeZone) => ({
   start: zonedTimeToUtc(date, slot.start, timeZone),
   end: zonedTimeToUtc(date, slot.end, timeZone),
 });
+
+const hasMinimumLeadTime = (slotStart, now = Date.now()) => (
+  slotStart.getTime() >= now + MIN_LEAD_TIME_MINUTES * 60 * 1000
+);
 
 const bookingEventId = () => {
   const bytes = new Uint8Array(8);
@@ -416,6 +421,11 @@ export async function onRequestPost({ request, env }) {
     const range = slotRange(booking.preferred_day, selectedSlot);
     const calendar = encodeURIComponent(env.GOOGLE_CALENDAR_ID);
     const eventId = bookingEventId();
+    const utcRange = slotUtcRange(booking.preferred_day, selectedSlot, timeZone);
+
+    if (!hasMinimumLeadTime(utcRange.start)) {
+      return json({ message: "Please choose a pickup window that starts at least 2 hours from now." }, 409);
+    }
 
     if (await isSlotBusy(env, booking.preferred_day, selectedSlot, timeZone)) {
       return json({ message: "That pickup window is no longer available. Please choose another time." }, 409);

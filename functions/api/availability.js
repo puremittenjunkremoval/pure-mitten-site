@@ -21,6 +21,7 @@ const WINDOWS = [
 const CALENDAR_SCOPE = "https://www.googleapis.com/auth/calendar";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const TIME_ZONE = "America/Detroit";
+const MIN_LEAD_TIME_MINUTES = 120;
 let tokenCache = null;
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), {
@@ -168,6 +169,10 @@ const slotRange = (date, slot, timeZone) => ({
   end: zonedTimeToUtc(date, slot.end, timeZone),
 });
 
+const hasMinimumLeadTime = (slotStart, now = Date.now()) => (
+  slotStart.getTime() >= now + MIN_LEAD_TIME_MINUTES * 60 * 1000
+);
+
 const isSameWindow = (slot, busy) => {
   const busyStart = new Date(busy.start);
   const busyEnd = new Date(busy.end);
@@ -212,10 +217,18 @@ export async function onRequestGet({ request, env }) {
     const firstSlot = slotRange(date, WINDOWS[0], timeZone);
     const lastSlot = slotRange(date, WINDOWS[WINDOWS.length - 1], timeZone);
     const busy = await activeEventBusyRanges(env, firstSlot, lastSlot, timeZone);
-    const windows = WINDOWS.map((window) => ({
-      window: window.label,
-      available: !busy.some((busyWindow) => isSameWindow(slotRange(date, window, timeZone), busyWindow)),
-    }));
+    const now = Date.now();
+    const windows = WINDOWS.map((window) => {
+      const range = slotRange(date, window, timeZone);
+      const tooSoon = !hasMinimumLeadTime(range.start, now);
+      const booked = busy.some((busyWindow) => isSameWindow(range, busyWindow));
+
+      return {
+        window: window.label,
+        available: !tooSoon && !booked,
+        reason: tooSoon ? "too_soon" : (booked ? "booked" : null),
+      };
+    });
 
     return json({ date, windows });
   } catch (error) {
