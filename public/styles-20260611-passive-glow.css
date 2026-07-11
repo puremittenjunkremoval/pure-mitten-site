@@ -25,7 +25,7 @@ a { color: inherit; }
 
 .promo-banner {
   position: relative;
-  z-index: 130;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,7 +139,7 @@ a { color: inherit; }
 .site-nav {
   position: sticky;
   top: 0;
-  z-index: 300;
+  z-index: 500;
   height: 118px;
   padding: 0 5%;
   background: var(--navy);
@@ -232,7 +232,7 @@ a { color: inherit; }
 
 .services-menu {
   position: absolute;
-  z-index: 320;
+  z-index: 510;
   top: calc(100% + 28px);
   left: 50%;
   width: min(620px, 90vw);
