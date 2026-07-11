@@ -1112,10 +1112,6 @@ section {
   align-items: stretch;
 }
 
-.gallery-followup {
-  margin-top: 56px;
-}
-
 .job-gallery-two {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
