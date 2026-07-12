@@ -1,8 +1,22 @@
+.hero {
+  min-height: calc(100vh - 186px);
+  padding-top: 54px;
+  padding-bottom: 46px;
+}
+
+.hero .hero-copy h1 {
+  max-width: 620px;
+  margin-bottom: 18px;
+  font-size: clamp(3.2rem, 5.4vw, 4.8rem);
+}
+
+.hero .hero-sub { line-height: 1.58; }
+
 .hero-paths {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   gap: 14px;
-  margin-top: 34px;
+  margin-top: 24px;
   max-width: 690px;
 }
 
@@ -11,7 +25,7 @@
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
-  padding: 20px;
+  padding: 16px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.08);
@@ -43,7 +57,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
-  margin-top: 18px;
+  margin-top: 14px;
 }
 
 .hero-support-links a {
@@ -53,6 +67,10 @@
 }
 
 .hero-support-links a:hover { color: #ffffff; }
+
+.hero .stats { margin-top: 34px; }
+
+html { overflow-x: hidden; }
 
 .free-quote-hero .page-sub { max-width: 650px; }
 
@@ -150,6 +168,12 @@ body.night-mode .quote-choice-side .booking-secondary-btn:hover {
 }
 
 @media (max-width: 760px) {
+  .hero {
+    min-height: 0;
+    padding-top: 36px;
+    padding-bottom: 54px;
+  }
+
   .hero-paths { grid-template-columns: 1fr; }
   .hero-path { padding: 16px; }
   .hero-path-primary .btn { min-height: 50px; }
