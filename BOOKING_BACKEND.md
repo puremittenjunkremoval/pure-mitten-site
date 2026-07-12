@@ -1,4 +1,11 @@
-# Google Calendar Booking Setup
+# Free Quote and Google Calendar Booking Setup
+
+The site has two separate customer paths:
+
+- `/quote` sends a no-obligation estimate request to `/api/quotes`. It does not create a calendar event.
+- `/booking` uses the appointment flow below and creates a Google Calendar event after submission.
+
+Both forms send notifications to `info@puremittenjunkremoval.com` and `contact@puremittenjunkremoval.com` through Resend. The quote form only needs the Resend variables; it does not need Google Calendar credentials.
 
 The booking page uses two API routes:
 
@@ -38,7 +45,7 @@ The booking submit route will not create calendar events unless `GOOGLE_SERVICE_
 
 ## 3. Email notifications
 
-The Google Calendar event itself becomes the main booking record. Resend sends the booking notification email to `info@puremittenjunkremoval.com` and `contact@puremittenjunkremoval.com`.
+The Google Calendar event itself becomes the main booking record. Resend sends both quote and booking notification emails to `info@puremittenjunkremoval.com` and `contact@puremittenjunkremoval.com`.
 
 For email notifications with uploaded photos attached, add:
 
@@ -69,6 +76,7 @@ The repository includes:
 - `wrangler.jsonc` for Pages project config
 - `public/_routes.json` so only `/api/*` invokes Pages Functions
 - `public/_headers` for basic security and static asset cache headers
+- `functions/api/quotes.js` for no-obligation quote requests
 - `functions/api/availability.js` and `functions/api/bookings.js` for booking routes
 
 ## 5. How double-booking prevention works

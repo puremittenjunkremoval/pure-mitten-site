@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Junk Removal Quote | Pure Mitten Junk Removal</title>
-  <meta name="description" content="Request a free, no-obligation junk removal quote from Pure Mitten Junk Removal. Tell us what needs to go and optionally upload photos for an estimate." />
-  <link rel="canonical" href="https://puremittenjunkremoval.com/quote" />
+  <title>Free Quote Request Received | Pure Mitten Junk Removal</title>
+  <meta name="description" content="Your free junk removal quote request was received by Pure Mitten Junk Removal." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://puremittenjunkremoval.com/quote-thanks" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-truck-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-truck-192.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon-truck.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles-20260709-booking.css" />
+  <link rel="stylesheet" href="styles-20260611-passive-glow.css" />
   <link rel="stylesheet" href="nav-layer-fix-20260711.css" />
   <link rel="stylesheet" href="funnel-20260712.css" />
   <script type="application/ld+json">
@@ -113,73 +114,22 @@
     <strong>Cleanup discounts are available for a limited time on select junk removal jobs.</strong>
   </a>
 
-  <header class="page-hero quote-hero free-quote-hero">
+  <header class="page-hero">
     <div class="page-hero-inner reveal">
-      <div class="eyebrow">Free Quote</div>
-      <h1>Get a free junk removal quote.</h1>
-      <p class="page-sub">No commitment required. Tell us what you need removed and upload photos for a fast estimate. You do not need to choose an appointment.</p>
+      <div class="eyebrow">Quote Request Received</div>
+      <h1>Thanks! We will review your details.</h1>
+      <p class="page-sub">We will text or call you with an estimate using your preferred contact method. Your quote request did not schedule a pickup or approve a charge.</p>
+      <div class="confirmation-card" data-quote-confirmation hidden>
+        <span>Free quote request</span>
+        <strong data-quote-number></strong>
+      </div>
+      <div class="quote-success-actions">
+        <a class="btn btn-outline" href="booking">View Available Appointments</a>
+        <a class="btn btn-primary" href="/">Back Home</a>
+        <a class="btn btn-outline" href="pricing">View Pricing</a>
+      </div>
     </div>
   </header>
-
-  <section class="quote-section free-quote-section">
-    <div class="section-inner quote-layout">
-      <form class="quote-form free-quote-form reveal" data-quote-form enctype="multipart/form-data">
-        <input type="text" name="_honey" class="hidden-field" tabindex="-1" autocomplete="off" />
-        <div class="section-tag">No-Obligation Estimate</div>
-        <h2>Tell us what needs to go.</h2>
-        <p class="booking-step-sub">A few details and clear photos help us give you the most useful estimate.</p>
-
-        <div class="form-grid">
-          <label class="field">
-            <span>Name</span>
-            <input type="text" name="name" autocomplete="name" required />
-          </label>
-          <label class="field">
-            <span>Phone Number</span>
-            <input type="tel" name="phone" autocomplete="tel" inputmode="tel" required />
-          </label>
-          <label class="field">
-            <span>City or ZIP Code</span>
-            <input type="text" name="location" autocomplete="postal-code" placeholder="Ypsilanti or 48197" required />
-          </label>
-          <label class="field">
-            <span>Preferred Contact Method</span>
-            <select name="contact_method" required>
-              <option value="">Choose call or text</option>
-              <option value="Text message">Text me</option>
-              <option value="Phone call">Call me</option>
-            </select>
-          </label>
-        </div>
-
-        <label class="field">
-          <span>What Needs To Be Removed?</span>
-          <textarea name="items_to_remove" rows="6" placeholder="List the items, how much there is, where it is located, and anything heavy or hard to reach." required></textarea>
-        </label>
-
-        <label class="field photo-upload-field">
-          <span>Photos <small>Optional, but strongly encouraged</small></span>
-          <input type="file" name="attachment" accept="image/png, image/jpeg, image/webp, image/heic" multiple />
-          <em>Upload up to 5 photos so we can better estimate the load and labor.</em>
-        </label>
-
-        <p class="no-obligation-note"><strong>No commitment required.</strong> Requesting a quote does not schedule a pickup or approve any charge.</p>
-        <button class="btn btn-blue submit-btn quote-submit-btn" type="submit">Request My Free Quote</button>
-        <p class="booking-status" data-quote-status aria-live="polite"></p>
-      </form>
-
-      <aside class="quote-side quote-choice-side reveal">
-        <img class="about-logo" src="assets/pure%20mitten%20junk%20removal.png" alt="Pure Mitten Junk Removal logo" />
-        <div class="map-title">Only Need A Price?</div>
-        <p class="section-sub">This form is only for an estimate. We will review the details and call or text you using your preferred contact method.</p>
-        <p class="quote-phone"><strong>Prefer to talk now?</strong><br><a href="tel:+17344808190">734-480-8190</a></p>
-        <div class="quote-side-divider"></div>
-        <div class="map-title">Ready To Schedule?</div>
-        <p class="section-sub">Choose an available pickup window. Final pricing is approved before we begin.</p>
-        <a class="btn btn-outline booking-secondary-btn" href="booking">Book a Pickup</a>
-      </aside>
-    </div>
-  </section>
 
   <footer>
     <div class="footer-inner">
@@ -199,7 +149,16 @@
       <span class="theme-toggle-text">Day Mode</span>
     </button>
   </footer>
+  <script>
+    const confirmationCard = document.querySelector("[data-quote-confirmation]");
+    const confirmationNumber = document.querySelector("[data-quote-number]");
+    const savedConfirmation = JSON.parse(sessionStorage.getItem("pureMittenQuoteConfirmation") || "null");
+
+    if (confirmationCard && savedConfirmation?.quoteId) {
+      confirmationCard.hidden = false;
+      confirmationNumber.textContent = `Reference: ${savedConfirmation.quoteId}`;
+    }
+  </script>
   <script src="script-20260601.js"></script>
-  <script src="script-20260712-quote.js"></script>
 </body>
 </html>

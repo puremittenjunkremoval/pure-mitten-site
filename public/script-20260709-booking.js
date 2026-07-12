@@ -77,6 +77,12 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeMobileDropdowns();
 });
 
+document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
+  link.addEventListener("click", () => {
+    window.gtag?.("event", "phone_click", { contact_method: "phone" });
+  });
+});
+
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
@@ -574,6 +580,7 @@ if (bookingForm) {
         preferredDay: bookingForm.elements.preferred_day?.value || "",
         preferredWindow: bookingForm.elements.preferred_window?.value || "",
       }));
+      window.gtag?.("event", "generate_lead", { method: "booking_form" });
       window.location.href = `thanks?booking=${encodeURIComponent(confirmationNumber)}`;
     } catch (error) {
       setStatus(submitStatus, error.message || "Something went wrong sending the request. Please call or text 734-480-8190.", "bad");
