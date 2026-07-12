@@ -1,16 +1,16 @@
 .hero {
   min-height: calc(100vh - 186px);
-  padding-top: 54px;
-  padding-bottom: 46px;
+  padding-top: 28px;
+  padding-bottom: 36px;
 }
 
 .hero .hero-copy h1 {
   max-width: 620px;
   margin-bottom: 18px;
-  font-size: clamp(3.2rem, 5.4vw, 4.8rem);
+  font-size: clamp(3.2rem, 5vw, 4.4rem);
 }
 
-.hero .hero-sub { line-height: 1.58; }
+.hero .hero-sub { line-height: 1.5; }
 
 .hero-paths {
   display: grid;
