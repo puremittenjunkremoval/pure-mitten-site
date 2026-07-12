@@ -13,8 +13,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles-20260709-booking.css" />
-  <link rel="stylesheet" href="nav-layer-fix-20260711.css" />
+  <link rel="stylesheet" href="nav-layer-fix-20260713.css" />
   <link rel="stylesheet" href="funnel-20260712d.css" />
+  <link rel="stylesheet" href="quote-path-choice-20260713.css" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -99,6 +100,7 @@
         </li>
         <li><a href="faq">FAQ</a></li>
         <li><a href="pricing">Pricing</a></li>
+        <li><a href="booking">On-Site Quote</a></li>
         <li><a href="about">About</a></li>
       </ul>
       <div class="nav-actions">
@@ -122,7 +124,15 @@
   </header>
 
   <section class="quote-section free-quote-section">
-    <div class="section-inner quote-layout">
+    <div class="section-inner">
+      <div class="estimate-path-switcher reveal">
+        <div>
+          <span>Prefer an exact price in person?</span>
+          <strong>Schedule a free on-site quote and choose a convenient appointment window.</strong>
+        </div>
+        <a class="btn" href="booking">Schedule a Free On-Site Quote</a>
+      </div>
+      <div class="quote-layout">
       <form class="quote-form free-quote-form reveal" data-quote-form enctype="multipart/form-data">
         <input type="text" name="_honey" class="hidden-field" tabindex="-1" autocomplete="off" />
         <div class="section-tag">No-Obligation Estimate</div>
@@ -178,6 +188,7 @@
         <p class="section-sub">Choose a convenient appointment. We will confirm the exact price onsite and can remove everything immediately if you approve it.</p>
         <a class="btn btn-outline booking-secondary-btn" href="booking">Schedule a Free On-Site Quote</a>
       </aside>
+      </div>
     </div>
   </section>
 

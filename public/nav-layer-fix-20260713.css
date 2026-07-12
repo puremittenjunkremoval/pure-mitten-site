@@ -1,0 +1,47 @@
+.site-nav {
+  z-index: 10000 !important;
+  isolation: isolate;
+  overflow: visible !important;
+}
+
+.site-nav .nav-shell,
+.site-nav .nav-links,
+.site-nav .nav-dropdown {
+  overflow: visible !important;
+}
+
+.site-nav .services-menu {
+  z-index: 10010 !important;
+}
+
+.promo-banner {
+  z-index: 0 !important;
+}
+
+@media (min-width: 1121px) and (max-width: 1450px) {
+  .site-nav {
+    padding-right: 3%;
+    padding-left: 3%;
+  }
+
+  .site-nav .brand-logo {
+    width: 230px;
+    height: 80px;
+  }
+
+  .site-nav .nav-shell {
+    gap: 16px;
+  }
+
+  .site-nav .nav-links {
+    gap: 15px;
+  }
+
+  .site-nav .nav-links a {
+    font-size: 0.95rem;
+  }
+
+  .site-nav .nav-actions {
+    min-width: 142px;
+  }
+}

@@ -1,0 +1,61 @@
+.estimate-path-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 28px;
+  padding: 22px 24px;
+  border: 1px solid rgba(125, 211, 252, 0.42);
+  border-left: 5px solid var(--sky);
+  border-radius: 6px;
+  background: var(--navy);
+  color: var(--white);
+  box-shadow: 0 12px 28px rgba(8, 30, 52, 0.14);
+}
+
+.estimate-path-switcher div {
+  display: grid;
+  gap: 4px;
+}
+
+.estimate-path-switcher span {
+  color: var(--sky);
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.45rem;
+  line-height: 1.1;
+}
+
+.estimate-path-switcher strong {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.estimate-path-switcher .btn {
+  flex: 0 0 auto;
+  min-height: 50px;
+  padding: 12px 20px;
+  background: var(--white);
+  color: var(--navy);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.estimate-path-switcher .btn:hover {
+  background: #dff2ff;
+}
+
+@media (max-width: 760px) {
+  .estimate-path-switcher {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .estimate-path-switcher .btn {
+    width: 100%;
+    white-space: normal;
+  }
+}
