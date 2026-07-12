@@ -80,8 +80,8 @@ const collectAttachments = async (files) => {
 };
 
 const buildEmailHtml = (quote) => `
-  <h1>New free quote request</h1>
-  <p><strong>Quote ID:</strong> ${escapeHtml(quote.id)}</p>
+  <h1>New fast estimate request</h1>
+  <p><strong>Estimate ID:</strong> ${escapeHtml(quote.id)}</p>
   <p><strong>Name:</strong> ${escapeHtml(quote.name)}</p>
   <p><strong>Phone:</strong> ${escapeHtml(quote.phone)}</p>
   <p><strong>City or ZIP:</strong> ${escapeHtml(quote.location)}</p>
@@ -94,7 +94,7 @@ export async function onRequestPost({ request, env }) {
   if (!env.RESEND_API_KEY) {
     console.error("Quote email unavailable: RESEND_API_KEY is not configured.");
     return json({
-      message: "Online quotes are temporarily unavailable. Please call or text 734-480-8190.",
+      message: "Online estimates are temporarily unavailable. Please call or text 734-480-8190.",
       code: "email_config_missing",
     }, 503);
   }
@@ -118,7 +118,7 @@ export async function onRequestPost({ request, env }) {
       .filter((name) => !quote[name]);
 
     if (missing.length) {
-      return json({ message: "Please fill out all required quote fields." }, 400);
+      return json({ message: "Please fill out all required estimate fields." }, 400);
     }
 
     if (!["Text message", "Phone call"].includes(quote.contactMethod)) {
@@ -135,7 +135,7 @@ export async function onRequestPost({ request, env }) {
       body: JSON.stringify({
         from: env.BOOKING_FROM || DEFAULT_FROM,
         to: recipients(env),
-        subject: `Free quote request: ${quote.location} - ${quote.name}`,
+        subject: `Fast estimate request: ${quote.location} - ${quote.name}`,
         html: buildEmailHtml(quote),
         attachments,
       }),
@@ -145,19 +145,19 @@ export async function onRequestPost({ request, env }) {
       const message = await response.text();
       console.error(`Quote email failed: ${message}`);
       return json({
-        message: "We could not send the quote request. Please call or text 734-480-8190.",
+        message: "We could not send the estimate request. Please call or text 734-480-8190.",
         code: "quote_email_failed",
       }, 502);
     }
 
     return json({ ok: true, quoteId: quote.id, emailSent: true });
   } catch (error) {
-    const message = error?.message || "Quote request failed.";
+    const message = error?.message || "Estimate request failed.";
     const isUploadError = message.startsWith("Please upload") || message.includes("photo upload");
     console.error(`Quote submission failed: ${error?.stack || message}`);
 
     return json({
-      message: isUploadError ? message : "Something went wrong sending the quote request. Please call or text 734-480-8190.",
+      message: isUploadError ? message : "Something went wrong sending the estimate request. Please call or text 734-480-8190.",
       code: isUploadError ? "invalid_upload" : "quote_submit_failed",
     }, isUploadError ? 400 : 500);
   }

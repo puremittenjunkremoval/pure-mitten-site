@@ -40,6 +40,11 @@
 .hero-path .btn {
   width: 100%;
   margin-bottom: 12px;
+  min-height: 54px;
+  padding: 10px 16px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
 }
 
 .hero-path-primary .btn {

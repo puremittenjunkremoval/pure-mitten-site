@@ -550,7 +550,7 @@ if (bookingForm) {
     const currentStep = bookingForm.querySelector("[data-booking-step='3']");
     if (!currentStep || !validateStep(currentStep)) return;
 
-    setStatus(submitStatus, "Sending your booking request...", "muted");
+    setStatus(submitStatus, "Sending your on-site quote request...", "muted");
     if (submitButton) submitButton.disabled = true;
 
     try {
@@ -571,7 +571,7 @@ if (bookingForm) {
       }
 
       if (!response.ok) {
-        throw new Error(result.message || "Booking request failed");
+        throw new Error(result.message || "On-site quote request failed");
       }
 
       const confirmationNumber = result.confirmationNumber || result.eventId || "sent";

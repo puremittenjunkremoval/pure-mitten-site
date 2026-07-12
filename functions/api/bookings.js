@@ -271,7 +271,7 @@ const isSlotBusy = async (env, date, slot, timeZone) => {
 };
 
 const buildDescription = (booking) => [
-  "New pickup booking request",
+  "New on-site quote appointment",
   "",
   `Name: ${booking.name}`,
   `Phone: ${booking.phone}`,
@@ -289,7 +289,7 @@ const buildDescription = (booking) => [
 ].join("\n");
 
 const buildEmailHtml = (booking) => `
-  <h1>New pickup booking request</h1>
+  <h1>New on-site quote appointment</h1>
   <p><strong>Preferred window:</strong> ${escapeHtml(booking.preferred_day)} ${escapeHtml(booking.preferred_window)}</p>
   <p><strong>Name:</strong> ${escapeHtml(booking.name)}</p>
   <p><strong>Phone:</strong> ${escapeHtml(booking.phone)}</p>
@@ -339,7 +339,7 @@ const sendNotificationEmail = async (env, booking, files) => {
     body: JSON.stringify({
       from: bookingFrom,
       to: notificationRecipients(env),
-      subject: `New pickup request: ${booking.preferred_day} ${booking.preferred_window}`,
+      subject: `New on-site quote appointment: ${booking.preferred_day} ${booking.preferred_window}`,
       html: buildEmailHtml(booking),
       attachments,
     }),
@@ -435,7 +435,7 @@ export async function onRequestPost({ request, env }) {
       method: "POST",
       body: JSON.stringify({
         id: eventId,
-        summary: `Pickup request - ${booking.name} - ${booking.pickup_city}`,
+        summary: `On-site quote - ${booking.name} - ${booking.pickup_city}`,
         location: booking.pickup_address,
         description: buildDescription(booking),
         start: { dateTime: range.start, timeZone },
@@ -474,7 +474,7 @@ export async function onRequestPost({ request, env }) {
   } catch (error) {
     console.error(`Booking submission failed: ${error?.stack || error?.message || error}`);
     return json({
-      message: "Something went wrong sending the booking request. Please call or text 734-480-8190.",
+      message: "Something went wrong sending the on-site quote request. Please call or text 734-480-8190.",
       code: "booking_submit_failed",
     }, 500);
   }

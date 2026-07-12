@@ -1,4 +1,4 @@
-# Free Quote and Google Calendar Booking Setup
+# Fast Estimate and Google Calendar On-Site Quote Setup
 
 The site has two separate customer paths:
 
@@ -12,7 +12,7 @@ The booking page uses two API routes:
 - `/api/availability?date=YYYY-MM-DD`
 - `/api/bookings`
 
-These are Cloudflare Pages Functions that talk to Google Calendar. Availability checks use Google Calendar busy windows, and booking requests create a calendar event for the selected pickup window.
+These are Cloudflare Pages Functions that talk to Google Calendar. Availability checks use Google Calendar busy windows, and on-site quote requests create a calendar event for the selected appointment window.
 
 ## 1. Create the Google service account
 
@@ -76,7 +76,7 @@ The repository includes:
 - `wrangler.jsonc` for Pages project config
 - `public/_routes.json` so only `/api/*` invokes Pages Functions
 - `public/_headers` for basic security and static asset cache headers
-- `functions/api/quotes.js` for no-obligation quote requests
+- `functions/api/quotes.js` for no-obligation photo estimate requests
 - `functions/api/availability.js` and `functions/api/bookings.js` for booking routes
 
 ## 5. How double-booking prevention works

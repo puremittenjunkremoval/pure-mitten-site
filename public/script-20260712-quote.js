@@ -20,7 +20,7 @@ if (quoteForm) {
       return;
     }
 
-    setStatus("Sending your free quote request...", "muted");
+    setStatus("Sending your fast estimate request...", "muted");
     if (submitButton) submitButton.disabled = true;
 
     try {
@@ -32,7 +32,7 @@ if (quoteForm) {
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(result.message || "We could not send the quote request.");
+        throw new Error(result.message || "We could not send the estimate request.");
       }
 
       sessionStorage.setItem("pureMittenQuoteConfirmation", JSON.stringify({
@@ -40,7 +40,7 @@ if (quoteForm) {
         name: quoteForm.elements.name?.value || "",
         contactMethod: quoteForm.elements.contact_method?.value || "call or text",
       }));
-      window.gtag?.("event", "generate_lead", { method: "free_quote_form" });
+      window.gtag?.("event", "generate_lead", { method: "fast_estimate_form" });
       window.location.href = "quote-thanks";
     } catch (error) {
       setStatus(error.message || "Something went wrong. Please call or text 734-480-8190.", "bad");
