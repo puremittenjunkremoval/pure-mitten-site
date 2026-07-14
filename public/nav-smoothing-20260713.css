@@ -1,0 +1,16 @@
+@media (min-width: 681px) {
+  .site-nav .services-menu {
+    top: calc(100% + 16px);
+  }
+
+  .site-nav .services-menu::before {
+    top: -22px;
+    height: 24px;
+  }
+
+  .site-nav .nav-dropdown.is-hover-open .services-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-28%) translateY(0);
+  }
+}

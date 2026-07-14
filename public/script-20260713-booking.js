@@ -2,7 +2,8 @@ const reveals = document.querySelectorAll(".reveal");
 const siteNav = document.querySelector(".site-nav");
 const themeToggle = document.querySelector("[data-theme-toggle]");
 const navDropdowns = document.querySelectorAll(".nav-dropdown");
-let navIsCompact = false;
+let navIsCompact = siteNav?.classList.contains("nav-compact") || false;
+let navUpdateFrame = 0;
 
 const setThemeToggleText = () => {
   if (!themeToggle) return;
@@ -27,18 +28,23 @@ themeToggle?.addEventListener("click", () => {
 const updateNavSize = () => {
   if (!siteNav) return;
   const y = window.scrollY || document.documentElement.scrollTop || 0;
+  const shouldBeCompact = navIsCompact ? y > 72 : y > 140;
 
-  if (!navIsCompact && y > 140) {
-    navIsCompact = true;
-    siteNav.classList.add("nav-compact");
-  } else if (navIsCompact && y < 12) {
-    navIsCompact = false;
-    siteNav.classList.remove("nav-compact");
-  }
+  if (shouldBeCompact === navIsCompact) return;
+  navIsCompact = shouldBeCompact;
+  siteNav.classList.toggle("nav-compact", navIsCompact);
+};
+
+const scheduleNavSizeUpdate = () => {
+  if (navUpdateFrame) return;
+  navUpdateFrame = window.requestAnimationFrame(() => {
+    navUpdateFrame = 0;
+    updateNavSize();
+  });
 };
 
 updateNavSize();
-window.addEventListener("scroll", updateNavSize, { passive: true });
+window.addEventListener("scroll", scheduleNavSizeUpdate, { passive: true });
 
 const closeMobileDropdowns = (except = null) => {
   navDropdowns.forEach((dropdown) => {
@@ -51,6 +57,24 @@ const closeMobileDropdowns = (except = null) => {
 navDropdowns.forEach((dropdown) => {
   const toggle = dropdown.querySelector(".nav-dropdown-toggle");
   if (!toggle) return;
+  let hoverCloseTimer = 0;
+
+  dropdown.addEventListener("pointerenter", () => {
+    if (!window.matchMedia("(min-width: 681px)").matches) return;
+    window.clearTimeout(hoverCloseTimer);
+    navDropdowns.forEach((otherDropdown) => {
+      if (otherDropdown !== dropdown) otherDropdown.classList.remove("is-hover-open");
+    });
+    dropdown.classList.add("is-hover-open");
+  });
+
+  dropdown.addEventListener("pointerleave", () => {
+    if (!window.matchMedia("(min-width: 681px)").matches) return;
+    window.clearTimeout(hoverCloseTimer);
+    hoverCloseTimer = window.setTimeout(() => {
+      dropdown.classList.remove("is-hover-open");
+    }, 260);
+  });
 
   toggle.setAttribute("aria-expanded", "false");
   toggle.addEventListener("click", (event) => {
@@ -70,11 +94,15 @@ document.addEventListener("click", (event) => {
 });
 
 window.addEventListener("resize", () => {
+  navDropdowns.forEach((dropdown) => dropdown.classList.remove("is-hover-open"));
   if (!window.matchMedia("(max-width: 680px)").matches) closeMobileDropdowns();
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeMobileDropdowns();
+  if (event.key === "Escape") {
+    navDropdowns.forEach((dropdown) => dropdown.classList.remove("is-hover-open"));
+    closeMobileDropdowns();
+  }
 });
 
 document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
