@@ -2,8 +2,10 @@ const reveals = document.querySelectorAll(".reveal");
 const siteNav = document.querySelector(".site-nav");
 const themeToggle = document.querySelector("[data-theme-toggle]");
 const navDropdowns = document.querySelectorAll(".nav-dropdown");
+const promoBanner = document.querySelector(".promo-banner");
 let navIsCompact = siteNav?.classList.contains("nav-compact") || false;
 let navUpdateFrame = 0;
+let navSettleTimer = 0;
 
 const setThemeToggleText = () => {
   if (!themeToggle) return;
@@ -25,26 +27,47 @@ themeToggle?.addEventListener("click", () => {
   setThemeToggleText();
 });
 
-const updateNavSize = () => {
+const setNavCompact = (shouldBeCompact) => {
   if (!siteNav) return;
-  const y = window.scrollY || document.documentElement.scrollTop || 0;
-  const shouldBeCompact = navIsCompact ? y > 72 : y > 140;
-
   if (shouldBeCompact === navIsCompact) return;
   navIsCompact = shouldBeCompact;
   siteNav.classList.toggle("nav-compact", navIsCompact);
 };
 
+const updateNavSize = () => {
+  if (!siteNav) return;
+  const y = window.scrollY || document.documentElement.scrollTop || 0;
+  setNavCompact(navIsCompact ? y > 120 : y > 220);
+};
+
 const scheduleNavSizeUpdate = () => {
-  if (navUpdateFrame) return;
-  navUpdateFrame = window.requestAnimationFrame(() => {
-    navUpdateFrame = 0;
-    updateNavSize();
-  });
+  if (!navUpdateFrame) {
+    navUpdateFrame = window.requestAnimationFrame(() => {
+      navUpdateFrame = 0;
+      updateNavSize();
+    });
+  }
+
+  window.clearTimeout(navSettleTimer);
+  navSettleTimer = window.setTimeout(updateNavSize, 140);
 };
 
 updateNavSize();
 window.addEventListener("scroll", scheduleNavSizeUpdate, { passive: true });
+window.addEventListener("scrollend", updateNavSize, { passive: true });
+window.addEventListener("pageshow", scheduleNavSizeUpdate);
+
+if (promoBanner && "IntersectionObserver" in window) {
+  const navTopObserver = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) {
+      setNavCompact(false);
+    } else if ((window.scrollY || 0) > 220) {
+      setNavCompact(true);
+    }
+  }, { threshold: 0.25 });
+
+  navTopObserver.observe(promoBanner);
+}
 
 const closeMobileDropdowns = (except = null) => {
   navDropdowns.forEach((dropdown) => {
