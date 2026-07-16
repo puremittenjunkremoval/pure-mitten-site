@@ -177,12 +177,27 @@
     const confirmationTitle = document.querySelector("[data-confirmation-title]");
     const confirmationCopy = document.querySelector("[data-confirmation-copy]");
     const bookingAction = document.querySelector("[data-booking-action]");
-    const savedConfirmation = JSON.parse(sessionStorage.getItem("pureMittenConfirmation") || "null");
-    const isRecent = savedConfirmation?.createdAt && Date.now() - savedConfirmation.createdAt < 30 * 60 * 1000;
+    const readStoredJson = (storage, key) => {
+      try { return JSON.parse(storage.getItem(key) || "null"); }
+      catch { return null; }
+    };
+    const currentConfirmation = readStoredJson(sessionStorage, "pureMittenConfirmation")
+      || readStoredJson(localStorage, "pureMittenConfirmation");
+    const legacyBooking = readStoredJson(sessionStorage, "pureMittenBookingConfirmation");
+    const legacyEstimate = readStoredJson(sessionStorage, "pureMittenQuoteConfirmation");
+    const savedConfirmation = currentConfirmation
+      || (legacyBooking?.confirmationNumber ? {
+        type: "booking",
+        reference: legacyBooking.confirmationNumber,
+        preferredDay: legacyBooking.preferredDay,
+        preferredWindow: legacyBooking.preferredWindow,
+      } : null)
+      || (legacyEstimate?.quoteId ? {
+        type: "estimate",
+        reference: legacyEstimate.quoteId,
+      } : null);
 
-    if (!savedConfirmation?.reference || !isRecent) {
-      window.location.replace("/");
-    } else {
+    if (savedConfirmation?.reference) {
       confirmationCard.hidden = false;
       confirmationNumber.textContent = `Confirmation: ${savedConfirmation.reference}`;
 
