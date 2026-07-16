@@ -128,12 +128,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
-  link.addEventListener("click", () => {
-    window.gtag?.("event", "phone_click", { contact_method: "phone" });
-  });
-});
-
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
@@ -626,13 +620,14 @@ if (bookingForm) {
       }
 
       const confirmationNumber = result.confirmationNumber || result.eventId || "sent";
-      sessionStorage.setItem("pureMittenBookingConfirmation", JSON.stringify({
-        confirmationNumber,
+      sessionStorage.setItem("pureMittenConfirmation", JSON.stringify({
+        type: "booking",
+        reference: confirmationNumber,
         preferredDay: bookingForm.elements.preferred_day?.value || "",
         preferredWindow: bookingForm.elements.preferred_window?.value || "",
+        createdAt: Date.now(),
       }));
-      window.gtag?.("event", "generate_lead", { method: "booking_form" });
-      window.location.href = `thanks?booking=${encodeURIComponent(confirmationNumber)}`;
+      window.location.href = "confirmation";
     } catch (error) {
       setStatus(submitStatus, error.message || "Something went wrong sending the request. Please call or text 734-480-8190.", "bad");
     } finally {

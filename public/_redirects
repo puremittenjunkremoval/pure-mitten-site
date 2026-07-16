@@ -32,6 +32,9 @@
 /pricing.html /pricing 301
 /quote.html /quote 301
 /booking.html /booking 301
+/confirmation.html /confirmation 301
 /quote-thanks.html /quote-thanks 301
 /services.html /services 301
 /thanks.html /thanks 301
+/quote-thanks /confirmation 302
+/thanks /confirmation 302

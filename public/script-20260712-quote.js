@@ -35,13 +35,14 @@ if (quoteForm) {
         throw new Error(result.message || "We could not send the estimate request.");
       }
 
-      sessionStorage.setItem("pureMittenQuoteConfirmation", JSON.stringify({
-        quoteId: result.quoteId || "received",
+      sessionStorage.setItem("pureMittenConfirmation", JSON.stringify({
+        type: "estimate",
+        reference: result.quoteId || "received",
         name: quoteForm.elements.name?.value || "",
         contactMethod: quoteForm.elements.contact_method?.value || "call or text",
+        createdAt: Date.now(),
       }));
-      window.gtag?.("event", "generate_lead", { method: "fast_estimate_form" });
-      window.location.href = "quote-thanks";
+      window.location.href = "confirmation";
     } catch (error) {
       setStatus(error.message || "Something went wrong. Please call or text 734-480-8190.", "bad");
     } finally {

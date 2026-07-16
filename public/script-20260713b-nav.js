@@ -128,12 +128,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
-  link.addEventListener("click", () => {
-    window.gtag?.("event", "phone_click", { contact_method: "phone" });
-  });
-});
-
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
