@@ -28,6 +28,27 @@ npm run dev
 
 For local booking API testing, create a `.dev.vars` file with the Google Calendar and optional Resend variables from `BOOKING_BACKEND.md`.
 
+## Live Google reviews
+
+The homepage carousel calls `/api/reviews`, which reads the verified location's
+reviews from the Google Business Profile API. The existing homepage reviews stay
+in place as a fallback if Google is unavailable.
+
+Add these values in **Cloudflare Pages > Settings > Variables and Secrets**:
+
+```text
+GOOGLE_BUSINESS_CLIENT_ID
+GOOGLE_BUSINESS_CLIENT_SECRET
+GOOGLE_BUSINESS_REFRESH_TOKEN
+GOOGLE_BUSINESS_ACCOUNT_ID
+GOOGLE_BUSINESS_LOCATION_ID
+```
+
+The OAuth grant must include
+`https://www.googleapis.com/auth/business.manage`. Successful responses are
+cached for five minutes, so new reviews appear automatically without editing or
+redeploying the website.
+
 ## Deploy
 
 Deploy directly with Wrangler:
