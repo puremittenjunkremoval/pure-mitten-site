@@ -1,0 +1,54 @@
+.deck-demo-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.deck-demo-grid .photo-card img {
+  height: 300px;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+
+.deck-demo-grid .deck-demo-loaded {
+  grid-column: 1 / -1;
+}
+
+.deck-demo-grid .deck-demo-loaded img {
+  height: 480px;
+  object-position: center 58%;
+}
+
+@media (max-width: 720px) {
+  .deck-demo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .deck-demo-grid .deck-demo-loaded {
+    grid-column: auto;
+  }
+
+  .deck-demo-grid .deck-demo-loaded img {
+    height: 420px;
+    object-position: center;
+  }
+
+  .deck-demo-grid .photo-card:not(.deck-demo-loaded) img {
+    height: 260px;
+  }
+
+  .footer-inner > div,
+  .footer-links {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 12px 16px;
+  }
+
+  .footer-inner p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+}
